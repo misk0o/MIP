@@ -1,0 +1,58 @@
+\documentclass{beamer}
+\usepackage[slovak]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usetheme{Madrid}
+
+\title{TIMA – jednoduchý plánovač času pre študentov}
+\author{Michal Pípa, Tomáš Topalov, Tomáš Šuba, Michal Urban}
+\date{Akademický rok 2025/26}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Ciele projektu}
+\begin{itemize}
+\item Jednoduché plánovanie času študentov.
+\item Pripomienky a sledovanie pokroku.
+\item Minimalizácia stresu a chaosu.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Návrh systému}
+\begin{itemize}
+\item Inbox – pridávanie úloh.
+\item Prioritizácia – Eisenhowerova matica.
+\item Time-blocking – rozvrhnutie úloh do času.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Diagram toku}
+\centering
+\setlength{\unitlength}{0.9cm}
+\begin{picture}(12,4)
+\put(0,2){\framebox(2,1){Inbox}}
+\put(2,2.5){\vector(1,0){2}}
+\put(4,2){\framebox(3,1){Prioritizácia}}
+\put(7,2.5){\vector(1,0){2}}
+\put(9,2){\framebox(3,1){Time-blocking}}
+\end{picture}
+\end{frame}
+
+\begin{frame}{Ukážka tabuľky}
+\begin{tabular}{|l|c|c|c|}
+\hline
+Úloha & Odhad [h] & Priorita & Skóre \\
+\hline
+Matematika & 2 & 3 & 6 \\
+Projekt MIP & 1 & 4 & 4 \\
+Angličtina & 1.5 & 2 & 3 \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Záver}
+TIMA je jednoduchý a efektívny systém, ktorý pomáha študentom zvládnuť úlohy prehľadne a bez stresu.
+\end{frame}
+
+\end{document}

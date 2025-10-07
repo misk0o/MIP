@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[slovak]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+
+\title{TimeManager (TIMA): jednoduchý plánovač času pre študentov}
+\author{Michal Pípa, Tomáš Topalov, Tomáš Šuba, Michal Urban}
+\date{Akademický rok 2025/26}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Článok opisuje návrh aplikácie TimeManager (TIMA), jednoduchej pomôcky pre efektívne plánovanie času študentov.
+TIMA využíva princípy time managementu, ako sú Eisenhowerova matica a Pomodoro technika, a umožňuje používateľom
+vytvárať, triediť a plánovať úlohy s pripomienkami. Projekt je zameraný na jednoduchosť a praktickú využiteľnosť.
+\end{abstract}
+
+\section{Úvod}
+Študenti často zápasia s organizáciou svojho času. TIMA pomáha jednoducho plánovať úlohy, nastavovať priority a kontrolovať pokrok.
+
+\section{Ciele}
+\begin{itemize}
+\item umožniť efektívne plánovanie školských úloh,
+\item znížiť stres z neorganizovaného rozvrhu,
+\item podporiť disciplínu pomocou pripomienok.
+\end{itemize}
+
+\section{Návrh riešenia}
+Aplikácia obsahuje tri hlavné časti:
+\begin{itemize}
+\item \textbf{Inbox} – rýchle pridávanie úloh,
+\item \textbf{Prioritizácia} – zoradenie podľa dôležitosti (Eisenhowerova matica),
+\item \textbf{Time-blocking} – plánovanie úloh do časového rozvrhu.
+\end{itemize}
+
+\section{Tabuľka úloh}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+Úloha & Odhad [h] & Priorita (1--4) & Skóre = Odhad × Priorita \\
+\hline
+Matematika & 2 & 3 & 6 \\
+Projekt MIP & 1 & 4 & 4 \\
+Angličtina & 1.5 & 2 & 3 \\
+\hline
+\end{tabular}
+\caption{Ukážka tabuľky úloh v systéme TIMA.}
+\end{table}
+
+\section{Záver}
+TIMA predstavuje jednoduchý, prehľadný a použiteľný nástroj, ktorý môže pomôcť študentom efektívne riadiť čas a zlepšiť produktivitu.
+
+\bibliographystyle{plain}
+\bibliography{refs_tima}
+\end{document}
