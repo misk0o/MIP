@@ -7,8 +7,7 @@
 \usepackage{wrapfig}
 \usepackage{amsmath}
 \usepackage{lipsum}
-\usepackage{mwe} % poskytuje example-image-a/b/c (dočasné obrázky)
-\graphicspath{{./}{images/}} % ak máš obrázky v "images/", nechaj to tak
+\graphicspath{{./}{images/}} % ak máš obrázky v priečinku "images/"
 
 \title{Predbežná verzia článku – Cvičenie 4}
 \author{Michal Pípa, Michal Urban, Tomáš Topalov, Tomáš Šuba}
@@ -21,24 +20,24 @@
 Dokument k cvičeniu č. 4 (dvojstĺpcový layout, dva diagramy vedľa seba, obrázok cez oba stĺpce, logo FIIT obtekané textom, matica a vzorec).
 \end{abstract}
 
-% Logo FIIT obtekané textom (dočasne použijeme example-image-a)
+% Logo FIIT obtekané textom (nahradené za STU-FIIT-nvf.png)
 \begin{wrapfigure}{r}{0.28\textwidth}
   \vspace{-8pt}
   \centering
-  \includegraphics[width=0.28\textwidth]{example-image-a} % nahraď za logo_fiit.png
+  \includegraphics[width=0.28\textwidth]{STU-FIIT-nvf.png}
   \vspace{-8pt}
 \end{wrapfigure}
 
 \section{Úvod}
 \lipsum[1]
 
-% Dva diagramy vedľa seba (dočasne example-image-b/c)
+% Dva diagramy vedľa seba (tabulka_uloh.png a uloha_tabulka.png)
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.48\linewidth]{example-image-b}%
+\includegraphics[width=0.48\linewidth]{tabulka_uloh.png}%
 \hfill
-\includegraphics[width=0.48\linewidth]{example-image-c}
-\caption{Dva UML diagramy vedľa seba. (nahraď za diagram1/diagram2)}
+\includegraphics[width=0.48\linewidth]{uloha_tabulka.png}
+\caption{Dva UML diagramy vedľa seba. (Tabuľka úloh a Úloha)}
 \end{figure}
 
 \lipsum[2]
@@ -46,8 +45,8 @@ Dokument k cvičeniu č. 4 (dvojstĺpcový layout, dva diagramy vedľa seba, obr
 % Obrázok cez oba stĺpce
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{example-image} % nahraď za diagram_fullwidth.png
-\caption{Obrázok cez oba stĺpce.}
+\includegraphics[width=\textwidth]{tabulka_uloh.png}
+\caption{Ukážka obrázka cez oba stĺpce – Tabuľka úloh.}
 \end{figure*}
 
 \section{Matica a vzorec}
@@ -67,7 +66,8 @@ S_n = \sum_{k=1}^{n} \frac{1}{k} + \frac{1}{n+1} + \frac{1}{n+2} + \cdots
 \]
 
 \section{Porovnanie s MS Word}
-V \LaTeX{} sa matice a vzorce píšu značkami (vyššia presnosť a znovupoužiteľnosť); vo Worde je to vizuálne rýchlejšie, no menej flexibilné pri zložitejších prípadoch.
+V \LaTeX{} sa matice a vzorce píšu značkami (vyššia presnosť a znovupoužiteľnosť); 
+vo Worde je to vizuálne rýchlejšie, no menej flexibilné pri zložitejších prípadoch.
 
 \section{Záver}
 Dokument spĺňa požiadavky Cvičenia~4.
