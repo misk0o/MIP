@@ -1,130 +1,75 @@
-% Metódy inžinierskej práce
+\documentclass[10pt,twocolumn,twoside,slovak,a4paper]{article}
 
-\documentclass[10pt,twoside,slovak,a4paper]{article}
-
-\usepackage[slovak]{babel}
-%\usepackage[T1]{fontenc}
-\usepackage[IL2]{fontenc} % lepšia sadzba písmena Ľ než v T1
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage[slovak]{babel}
 \usepackage{graphicx}
-\usepackage{url} % príkaz \url na formátovanie URL
-\usepackage{hyperref} % odkazy v texte budú aktívne (pri niektorých triedach dokumentov spôsobuje posun textu)
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{mwe} % poskytuje example-image-a/b/c (dočasné obrázky)
+\graphicspath{{./}{images/}} % ak máš obrázky v "images/", nechaj to tak
 
-\usepackage{cite}
-%\usepackage{times}
-
-\pagestyle{headings}
-
-\title{Názov\thanks{Semestrálny projekt v predmete Metódy inžinierskej práce, ak. rok 2015/16, vedenie: Meno Priezvisko}} % meno a priezvisko vyučujúceho na cvičeniach
-
-\author{Meno Priezvisko\\[2pt]
-	{\small Slovenská technická univerzita v Bratislave}\\
-	{\small Fakulta informatiky a informačných technológií}\\
-	{\small \texttt{...@stuba.sk}}
-	}
-
-\date{\small 30. september 2015} % upravte
-
-
+\title{Predbežná verzia článku – Cvičenie 4}
+\author{Michal Pípa, Michal Urban, Tomáš Topalov, Tomáš Šuba}
+\date{Ak. rok 2025/26}
 
 \begin{document}
-
 \maketitle
 
 \begin{abstract}
-\ldots
+Dokument k cvičeniu č. 4 (dvojstĺpcový layout, dva diagramy vedľa seba, obrázok cez oba stĺpce, logo FIIT obtekané textom, matica a vzorec).
 \end{abstract}
 
-
+% Logo FIIT obtekané textom (dočasne použijeme example-image-a)
+\begin{wrapfigure}{r}{0.28\textwidth}
+  \vspace{-8pt}
+  \centering
+  \includegraphics[width=0.28\textwidth]{example-image-a} % nahraď za logo_fiit.png
+  \vspace{-8pt}
+\end{wrapfigure}
 
 \section{Úvod}
+\lipsum[1]
 
-Motivujte čitateľa a vysvetlite, o čom píšete. Úvod sa väčšinou nedelí na časti.
-
-Uveďte explicitne štruktúru článku. Tu je nejaký príklad.
-Základný problém, ktorý bol naznačený v úvode, je podrobnejšie vysvetlený v časti~\ref{nejaka}.
-Dôležité súvislosti sú uvedené v častiach~\ref{dolezita} a~\ref{dolezitejsia}.
-Záverečné poznámky prináša časť~\ref{zaver}.
-
-
-
-\section{Nejaká časť} \label{nejaka}
-
-Z obr.~\ref{f:rozhod} je všetko jasné. 
-
-\begin{figure*}[tbh]
+% Dva diagramy vedľa seba (dočasne example-image-b/c)
+\begin{figure}[h]
 \centering
-%\includegraphics[scale=1.0]{diagram.pdf}
-Aj text môže byť prezentovaný ako obrázok. Stane sa z neho označný plávajúci objekt. Po vytvorení diagramu zrušte znak \texttt{\%} pred príkazom \verb|\includegraphics| označte tento riadok ako komentár (tiež pomocou znaku \texttt{\%}).
-\caption{Rozhodujúci argument.}
-\label{f:rozhod}
+\includegraphics[width=0.48\linewidth]{example-image-b}%
+\hfill
+\includegraphics[width=0.48\linewidth]{example-image-c}
+\caption{Dva UML diagramy vedľa seba. (nahraď za diagram1/diagram2)}
+\end{figure}
+
+\lipsum[2]
+
+% Obrázok cez oba stĺpce
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{example-image} % nahraď za diagram_fullwidth.png
+\caption{Obrázok cez oba stĺpce.}
 \end{figure*}
 
+\section{Matica a vzorec}
+\[
+A=
+\begin{bmatrix}
+1 & 2 & 3 & 4 \\
+5 & 6 & 7 & 8 \\
+9 & 10 & 11 & 12 \\
+13 & 14 & 15 & 16 \\
+17 & 18 & 19 & 20
+\end{bmatrix}
+\]
 
+\[
+S_n = \sum_{k=1}^{n} \frac{1}{k} + \frac{1}{n+1} + \frac{1}{n+2} + \cdots
+\]
 
-\section{Iná časť} \label{ina}
+\section{Porovnanie s MS Word}
+V \LaTeX{} sa matice a vzorce píšu značkami (vyššia presnosť a znovupoužiteľnosť); vo Worde je to vizuálne rýchlejšie, no menej flexibilné pri zložitejších prípadoch.
 
-Základným problémom je teda\ldots{} Najprv sa pozrieme na nejaké vysvetlenie (časť~\ref{ina:nejake}), a potom na ešte nejaké (časť~\ref{ina:nejake}).\footnote{Niekedy môžete potrebovať aj poznámku pod čiarou.}
+\section{Záver}
+Dokument spĺňa požiadavky Cvičenia~4.
 
-Môže sa zdať, že problém vlastne nejestvuje\cite{Coplien:MPD}, ale bolo dokázané, že to tak nie je~\cite{Czarnecki:Staged, Czarnecki:Progress}. Napriek tomu, aj dnes na webe narazíme na všelijaké pochybné názory\cite{PLP-Framework}. Dôležité veci možno \emph{zdôrazniť kurzívou}.
-
-
-\subsection{Nejaké vysvetlenie} \label{ina:nejake}
-
-Niekedy treba uviesť zoznam:
-
-\begin{itemize}
-\item jedna vec
-\item druhá vec
-	\begin{itemize}
-	\item x
-	\item y
-	\end{itemize}
-\end{itemize}
-
-Ten istý zoznam, len číslovaný:
-
-\begin{enumerate}
-\item jedna vec
-\item druhá vec
-	\begin{enumerate}
-	\item x
-	\item y
-	\end{enumerate}
-\end{enumerate}
-
-
-\subsection{Ešte nejaké vysvetlenie} \label{ina:este}
-
-\paragraph{Veľmi dôležitá poznámka.}
-Niekedy je potrebné nadpisom označiť odsek. Text pokračuje hneď za nadpisom.
-
-
-
-\section{Dôležitá časť} \label{dolezita}
-
-
-
-
-\section{Ešte dôležitejšia časť} \label{dolezitejsia}
-
-\section{Nová časť} \label{nova}
-
-Toto je nový odsek v novej časti. Môžete tu rozviesť ďalšie informácie alebo diskusiu k téme.
-
-Tu je ďalší odsek, ktorý rozširuje predchádzajúci text a uvádza nové poznatky alebo príklady.
-
-
-
-
-\section{Záver} \label{zaver} % prípadne iný variant názvu
-
-
-
-%\acknowledgement{Ak niekomu chcete poďakovať\ldots}
-
-
-% týmto sa generuje zoznam literatúry z obsahu súboru literatura.bib podľa toho, na čo sa v článku odkazujete
-\bibliography{literatura}
-\bibliographystyle{abbrv} % prípadne alpha, abbrv alebo hociktorý iný
 \end{document}
