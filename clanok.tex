@@ -4,12 +4,29 @@
 \usepackage[utf8]{inputenc}
 \usepackage[slovak]{babel}
 \usepackage{graphicx}
-\usepackage{wrapfig}
 \usepackage{amsmath}
-\usepackage{lipsum}
-\graphicspath{{./}{images/}} % ak máš obrázky v priečinku "images/"
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
 
-\title{Predbežná verzia článku – Cvičenie 4}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  backgroundcolor=\color{gray!10},
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red},
+  upquote=true,
+  literate={├}{+}1 {─}{-}1 {└}{+}1 {│}{|}1
+}
+
+\graphicspath{{./}{images/}}
+
+\title{TimeManager: Inteligentný plánovač času pre študentov s integráciou Google služieb}
 \author{Michal Pípa, Michal Urban, Tomáš Topalov, Tomáš Šuba}
 \date{Ak. rok 2025/26}
 
@@ -17,59 +34,523 @@
 \maketitle
 
 \begin{abstract}
-Dokument k cvičeniu č. 4 (dvojstĺpcový layout, dva diagramy vedľa seba, obrázok cez oba stĺpce, logo FIIT obtekané textom, matica a vzorec).
+Tento článok prezentuje návrh webovej aplikácie TimeManager (TIMA), ktorá kombinuje princípy efektívneho time managementu s modernými technológiami a integráciou Google služieb. Aplikácia je určená primárne študentom a využíva umelú inteligenciu (Google Gemini) na inteligentné plánovanie úloh. Systém je postavený na Next.js frontende s Django backend-om a PostgreSQL databázou, čo zabezpečuje škálovateľnosť a vysoký výkon.
 \end{abstract}
 
-% Logo FIIT obtekané textom (nahradené za STU-FIIT-nvf.png)
-\begin{wrapfigure}{r}{0.28\textwidth}
-  \vspace{-8pt}
-  \centering
-  \includegraphics[width=0.28\textwidth]{STU-FIIT-nvf.png}
-  \vspace{-8pt}
-\end{wrapfigure}
+\section{Úvod a motivácia}
 
-\section{Úvod}
-\lipsum[1]
+Moderný študent čelí náročnej úlohe balansovať medzi akademickými povinnosťami, osobným rastom a voľnočasovými aktivitami. Podľa prieskumu \cite{time-management-students} až 68\% vysokoškolských študentov uvádza problémy s efektívnym plánovaním času, čo vedie k zvýšenému stresu a nižšej produktivite.
 
-% Dva diagramy vedľa seba (tabulka_uloh.png a uloha_tabulka.png)
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.48\linewidth]{tabulka_uloh.png}%
-\hfill
-\includegraphics[width=0.48\linewidth]{uloha_tabulka.png}
-\caption{Dva UML diagramy vedľa seba. (Tabuľka úloh a Úloha)}
-\end{figure}
+Existujúce riešenia ako Todoist, Microsoft To Do či Google Tasks ponúkajú základnú funkcionalitu správy úloh, no často im chýba inteligentná prioritizácia a integrácia s akademickým prostredím. TimeManager sa snaží preklenúť túto medzeru kombináciou osvedčených metód time managementu s modernou AI technológiou.
 
-\lipsum[2]
+\section{Súčasný stav riešenia}
 
-% Obrázok cez oba stĺpce
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{tabulka_uloh.png}
-\caption{Ukážka obrázka cez oba stĺpce – Tabuľka úloh.}
-\end{figure*}
+\subsection{Metódy time managementu}
 
-\section{Matica a vzorec}
+V oblasti time managementu existuje niekoľko osvedčených prístupov. \textbf{Eisenhowerova matica} kategorizuje úlohy podľa dôležitosti a naliehavosti do štyroch kvadrantov, čo umožňuje efektívnu prioritizáciu \cite{eisenhower}. \textbf{Pomodoro technika} využíva 25-minútové intervaly práce s krátkymi prestávkami na udržanie koncentrácie \cite{pomodoro}.
+
+\subsection{Existujúce aplikácie}
+
+Súčasný trh ponúka množstvo plánovacích aplikácií. Google Calendar poskytuje vynikajúcu správu udalostí, no chýba mu podpora pre projektové úlohy. Notion ponúka komplexný workspace, ale je príliš zložitý pre jednoduchý time management. Todoist exceluje v správe úloh, no nemá natívnu integráciu s akademickými systémami.
+
+\section{Problémová oblasť}
+
+Hlavným problémom je \textbf{fragmentácia nástrojov} – študenti musia prepínať medzi viacerými aplikáciami (kalendár, úlohy, poznámky), čo znižuje efektivitu. Druhý významný problém je \textbf{nedostatok kontextuálnej inteligencie} – existujúce nástroje nereagují na aktuálnu záťaž používateľa ani neposkytujú adaptívne odporúčania.
+
+Zároveň chybí \textbf{integrácia s akademickým prostredím} – prepojenie s rozvrhovými systémami škôl, sledovanie deadlinov semestrálnych prác či koordinácia skupinových projektov.
+
+\section{Návrh riešenia}
+
+\subsection{Architektúra systému}
+
+TimeManager využíva modernú trojvrstvovú architektúru:
+
+\textbf{Frontend} je implementovaný v Next.js 14 s využitím App Router, React Server Components a TypeScript pre type-safety. Tailwind CSS zabezpečuje responzívny dizajn a shadcn/ui poskytuje konzistentné UI komponenty s prístupnosťou (accessibility).
+
+\textbf{Backend} je postavený na Django 5.0 s Django REST Framework pre RESTful API. PostgreSQL 16 slúži ako primárna databáza s podporou JSONB pre flexibilné ukladanie metadát a full-text search pre vyhľadávanie úloh.
+
+\textbf{Integrácie} zahŕňajú Google Calendar API pre správu udalostí, Google Tasks API pre synchronizáciu úloh a Google Gemini API pre AI-powered odporúčania a automatickú kategorizáciu úloh.
+
+\subsection{Kľúčové funkcionality}
+
+\begin{enumerate}
+\item \textbf{Inteligentná prioritizácia}: Gemini analyzuje deadline, náročnosť a kontext úlohy a navrhuje optimálny čas na jej splnenie.
+\item \textbf{Automatická synchronizácia}: Obojsmerná synchronizácia s Google Calendar a Tasks zabezpečuje konzistenciu dát.
+\item \textbf{Vizuálny prehľad}: Dashboard zobrazuje denný/týždenný plán s farebným kódovaním podľa Eisenhowerovej matice.
+\item \textbf{Pomodoro timer}: Vstavaný časovač s notifikáciami a sledovaním produktivity.
+\item \textbf{Kolaborácia}: Zdieľanie projektov a úloh v rámci študentských tímov.
+\end{enumerate}
+
+\section{Databázová schéma}
+
+PostgreSQL databáza pozostáva z nasledujúcich hlavných tabuliek:
+
 \[
-A=
-\begin{bmatrix}
-1 & 2 & 3 & 4 \\
-5 & 6 & 7 & 8 \\
-9 & 10 & 11 & 12 \\
-13 & 14 & 15 & 16 \\
-17 & 18 & 19 & 20
-\end{bmatrix}
+\text{Schéma} = \{ U, T, P, C, S, I \}
 \]
 
+kde $U$ = Users, $T$ = Tasks, $P$ = Projects, $C$ = Categories, $S$ = Sessions, $I$ = Integrations.
+
+\subsection{Tabuľka Users}
+\begin{verbatim}
+- id (UUID, PK)
+- email (VARCHAR, UNIQUE)
+- google_id (VARCHAR, UNIQUE)
+- preferences (JSONB)
+- created_at (TIMESTAMP)
+\end{verbatim}
+
+\subsection{Tabuľka Tasks}
+\begin{verbatim}
+- id (UUID, PK)
+- user_id (UUID, FK -> Users)
+- project_id (UUID, FK -> Projects)
+- title (VARCHAR(255))
+- description (TEXT)
+- priority (INT 1-4)
+- urgency (INT 1-4)
+- deadline (TIMESTAMP)
+- estimated_duration (INT)
+- status (ENUM: pending, active,
+          completed, cancelled)
+- google_task_id (VARCHAR)
+- google_calendar_event_id (VARCHAR)
+- ai_suggestions (JSONB)
+- created_at (TIMESTAMP)
+- updated_at (TIMESTAMP)
+\end{verbatim}
+
+\subsection{Tabuľka Projects}
+\begin{verbatim}
+- id (UUID, PK)
+- name (VARCHAR(200))
+- owner_id (UUID, FK -> Users)
+- category_id (UUID, FK -> Categories)
+- shared_with (ARRAY[UUID])
+- color (VARCHAR(7))
+- created_at (TIMESTAMP)
+\end{verbatim}
+
+\subsection{Tabuľka PomodoroSessions}
+\begin{verbatim}
+- id (UUID, PK)
+- user_id (UUID, FK -> Users)
+- task_id (UUID, FK -> Tasks)
+- duration (INT)
+- completed (BOOLEAN)
+- started_at (TIMESTAMP)
+- ended_at (TIMESTAMP)
+\end{verbatim}
+
+\subsection{Indexy a optimalizácie}
+
+Pre efektívne vyhľadávanie sú vytvorené nasledujúce indexy:
+
 \[
-S_n = \sum_{k=1}^{n} \frac{1}{k} + \frac{1}{n+1} + \frac{1}{n+2} + \cdots
+\begin{aligned}
+&\text{idx\_tasks\_user\_deadline} \text{ ON Tasks(user\_id, deadline)} \\
+&\text{idx\_tasks\_status} \text{ ON Tasks(status)} \\
+&\text{idx\_tasks\_fulltext} \text{ ON Tasks USING GIN(to\_tsvector(title))}
+\end{aligned}
 \]
 
-\section{Porovnanie s MS Word}
-V \LaTeX{} sa matice a vzorce píšu značkami (vyššia presnosť a znovupoužiteľnosť); 
-vo Worde je to vizuálne rýchlejšie, no menej flexibilné pri zložitejších prípadoch.
+Časová zložitosť vyhľadávania úloh:
+\[
+O(\log n) \text{ pre indexované queries, kde } n = \text{počet úloh}
+\]
+
+\section{Porovnanie s existujúcimi riešeniami}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Feature} & \textbf{TIMA} & \textbf{Todoist} & \textbf{Notion} \\
+\hline
+AI prioritizácia & $\checkmark$ & $\times$ & $\times$ \\
+Google integrácia & $\checkmark$ & $\checkmark$ & Čiastočne \\
+Eisenhower matica & $\checkmark$ & $\times$ & Manuálne \\
+Pomodoro timer & $\checkmark$ & $\times$ & Plugin \\
+Študentský fokus & $\checkmark$ & $\times$ & $\times$ \\
+Open-source & $\checkmark$ & $\times$ & $\times$ \\
+\hline
+\end{tabular}
+\caption{Porovnanie funkcionalít}
+\end{table}
+
+Na rozdiel od konkurencie TIMA explicitne cieli na študentské potreby a kombinuje viacero osvedčených techník do jedného nástroja. AI integrácia nie je len marketingový buzzword, ale praktický nástroj pre kontextuálne odporúčania.
+
+\section{Technologické výhody}
+
+\subsection{Next.js frontend}
+Next.js 14 poskytuje server-side rendering (SSR) pre lepšie SEO a rýchlejšie načítanie, React Server Components znižujú bundle size o $\sim$30\% a App Router zjednodušuje routing a data fetching.
+
+\subsection{Django backend}
+Django ORM eliminuje SQL injection riziká, vstavaný admin interface urýchľuje vývoj a Django REST Framework poskytuje robustné API s automatickou dokumentáciou (OpenAPI/Swagger).
+
+\subsection{PostgreSQL}
+JSONB typ umožňuje flexibilné ukladanie AI odporúčaní bez potreby schema migrations, full-text search podporuje vyhľadávanie v slovenčine a ACID garantuje konzistenciu dát pri synchronizácii.
+
+\section{Implementačné výzvy}
+
+Hlavné technické výzvy zahŕňajú:
+
+\begin{enumerate}
+\item \textbf{Synchronizácia}: Riešenie konfliktov pri simultánnych zmenách v TIMA a Google službách pomocou Last-Write-Wins (LWW) stratégie s timestampmi.
+\item \textbf{Rate limiting}: Google API majú limity (1000 požiadaviek/100s pre Calendar), je nutné implementovať request batching a caching.
+\item \textbf{AI náklady}: Gemini API nie je zadarmo, optimalizácia promptov a caching odpovedí znižujú náklady.
+\item \textbf{Privacy}: GDPR compliance vyžaduje šifrovanie osobných dát a explicitný súhlas používateľov.
+\end{enumerate}
+
+\onecolumn
+
+\section{Implementácia}
+
+\subsection{Štruktúra Next.js projektu}
+
+Projekt využíva App Router štruktúru Next.js 14 \cite{nextjs-docs}, ktorá zabezpečuje optimálnu organizáciu kódu:
+
+\begin{lstlisting}[language=bash, caption=Adresarova struktura frontendu]
+app/
+  (auth)/
+    login/
+      page.tsx
+    register/
+      page.tsx
+  dashboard/
+    page.tsx
+    tasks/
+      page.tsx
+      [id]/
+        page.tsx
+    calendar/
+      page.tsx
+  api/
+    tasks/
+      route.ts
+    gemini/
+      route.ts
+  layout.tsx
+  page.tsx
+
+components/
+  ui/
+    button.tsx
+    card.tsx
+    calendar.tsx
+  tasks/
+    task-card.tsx
+    task-form.tsx
+  dashboard/
+    stats-widget.tsx
+\end{lstlisting}
+
+\subsection{Komponent pre správu úloh}
+
+Implementácia React komponenty pre zobrazenie úlohy s využitím shadcn/ui \cite{shadcn-ui}:
+
+\begin{lstlisting}[language=JavaScript, caption=TaskCard komponent s Eisenhower prioritou]
+"use client"
+
+import { Card, CardContent, CardHeader } 
+  from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+
+interface Task {
+  id: string
+  title: string
+  priority: 1 | 2 | 3 | 4
+  urgency: 1 | 2 | 3 | 4
+  deadline: Date
+  status: "pending" | "active" | "completed"
+}
+
+export function TaskCard({ task }: { task: Task }) {
+  const getQuadrant = () => {
+    if (task.priority >= 3 && task.urgency >= 3)
+      return { color: "red", label: "Urgentne" }
+    if (task.priority >= 3 && task.urgency < 3)
+      return { color: "yellow", label: "Dolezite" }
+    if (task.priority < 3 && task.urgency >= 3)
+      return { color: "blue", label: "Delegovat" }
+    return { color: "gray", label: "Neskor" }
+  }
+
+  const quadrant = getQuadrant()
+
+  return (
+    <Card className="hover:shadow-lg transition">
+      <CardHeader className="flex flex-row 
+        items-center justify-between">
+        <h3 className="font-semibold">
+          {task.title}
+        </h3>
+        <Badge variant={quadrant.color}>
+          {quadrant.label}
+        </Badge>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-gray-600">
+          Deadline: {task.deadline.toLocaleDateString()}
+        </p>
+        <Button className="mt-2" size="sm">
+          Zacat Pomodoro
+        </Button>
+      </CardContent>
+    </Card>
+  )
+}
+\end{lstlisting}
+
+\subsection{Django REST API endpoint}
+
+Backend implementácia pre vytvorenie úlohy s AI analýzou:
+
+\begin{lstlisting}[language=Python, caption=Django view pre vytvorenie ulohy]
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.utils import timezone
+import google.generativeai as genai
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    
+    def create(self, request):
+        serializer = self.get_serializer(
+            data=request.data
+        )
+        serializer.is_valid(raise_exception=True)
+        
+        # AI analyza ulohy pomocou Gemini
+        task_data = serializer.validated_data
+        ai_suggestions = self.analyze_with_gemini(
+            task_data
+        )
+        
+        task = serializer.save(
+            user=request.user,
+            ai_suggestions=ai_suggestions
+        )
+        
+        # Synchronizacia s Google Tasks
+        self.sync_to_google_tasks(task)
+        
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+    
+    def analyze_with_gemini(self, task_data):
+        genai.configure(
+            api_key=settings.GEMINI_API_KEY
+        )
+        model = genai.GenerativeModel('gemini-pro')
+        
+        prompt = f"""
+        Analyzuj ulohu:
+        Nazov: {task_data['title']}
+        Popis: {task_data['description']}
+        Deadline: {task_data['deadline']}
+        
+        Poskytni:
+        1. Odporucanu prioritu (1-4)
+        2. Odhadovany cas na splnenie
+        3. Optimalny cas zacatia
+        4. Rozdelenie na mensie ulohy
+        """
+        
+        response = model.generate_content(prompt)
+        return {
+            'analysis': response.text,
+            'generated_at': timezone.now()
+        }
+    
+    @action(detail=True, methods=['post'])
+    def start_pomodoro(self, request, pk=None):
+        task = self.get_object()
+        session = PomodoroSession.objects.create(
+            user=request.user,
+            task=task,
+            duration=25,
+            started_at=timezone.now()
+        )
+        return Response({
+            'session_id': session.id,
+            'duration': 25
+        })
+\end{lstlisting}
+
+\subsection{PostgreSQL databázové modely}
+
+Django modely pre databázové tabuľky:
+
+\begin{lstlisting}[language=Python, caption=Django modely pre TIMA]
+from django.db import models
+from django.contrib.auth.models import User
+import uuid
+
+class Task(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Cakajuca'),
+        ('active', 'Aktivna'),
+        ('completed', 'Dokoncena'),
+        ('cancelled', 'Zrusena'),
+    ]
+    
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4
+    )
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE
+    )
+    project = models.ForeignKey(
+        'Project',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    priority = models.IntegerField(
+        choices=[(i, i) for i in range(1, 5)]
+    )
+    urgency = models.IntegerField(
+        choices=[(i, i) for i in range(1, 5)]
+    )
+    deadline = models.DateTimeField(null=True)
+    estimated_duration = models.IntegerField(
+        help_text="Minuty"
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
+    google_task_id = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    ai_suggestions = models.JSONField(
+        default=dict
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+    
+    class Meta:
+        indexes = [
+            models.Index(
+                fields=['user', 'deadline']
+            ),
+            models.Index(fields=['status']),
+        ]
+        ordering = ['-created_at']
+\end{lstlisting}
+
+\subsection{Integrácia s Google Calendar}
+
+Implementácia synchronizácie s Google Calendar API:
+
+\begin{lstlisting}[language=Python, caption=Google Calendar synchronizacia]
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+
+class GoogleCalendarSync:
+    def __init__(self, user):
+        self.user = user
+        self.credentials = self.get_credentials()
+        self.service = build(
+            'calendar', 'v3',
+            credentials=self.credentials
+        )
+    
+    def sync_task_to_event(self, task):
+        event = {
+            'summary': task.title,
+            'description': task.description,
+            'start': {
+                'dateTime': task.deadline.isoformat(),
+                'timeZone': 'Europe/Bratislava',
+            },
+            'end': {
+                'dateTime': (
+                    task.deadline + 
+                    timedelta(
+                        minutes=task.estimated_duration
+                    )
+                ).isoformat(),
+                'timeZone': 'Europe/Bratislava',
+            },
+            'reminders': {
+                'useDefault': False,
+                'overrides': [
+                    {'method': 'popup', 'minutes': 30},
+                ],
+            },
+        }
+        
+        if task.google_calendar_event_id:
+            # Update existing event
+            event = self.service.events().update(
+                calendarId='primary',
+                eventId=task.google_calendar_event_id,
+                body=event
+            ).execute()
+        else:
+            # Create new event
+            event = self.service.events().insert(
+                calendarId='primary',
+                body=event
+            ).execute()
+            task.google_calendar_event_id = event['id']
+            task.save()
+        
+        return event
+\end{lstlisting}
+
+\section{Budúci rozvoj}
+
+Plánované rozšírenia zahŕňajú:
+
+\begin{itemize}
+\item Mobilná aplikácia (React Native)
+\item Integrácia s LMS systémami (Moodle, Microsoft Teams)
+\item Analytika produktivity s ML predikciami
+\item Gamifikácia s achievementmi a streakmi
+\item Voice commands cez Google Assistant
+\end{itemize}
 
 \section{Záver}
-Dokument spĺňa požiadavky Cvičenia~4.
+
+TimeManager predstavuje moderný prístup k time managementu pre študentov, ktorý kombinuje osvedčené metodológie s najnovšími technológiami. Integrácia Google služieb a AI asistenta Gemini poskytuje inteligentné a kontextuálne odporúčania, zatiaľ čo robustný tech stack (Next.js, Django, PostgreSQL) zabezpečuje škálovateľnosť a spoľahlivosť.
+
+Článok predstavil problematiku fragmentácie nástrojov, návrh riešenia s detailnou databázovou schémou, implementačnými príkladmi a porovnanie s existujúcimi alternatívami. Otvorené zostávajú otázky dlhodobej udržateľnosti AI nákladov a širšej integrácie s akademickými systémami, ktoré budú predmetom ďalšieho výskumu.
+
+\begin{thebibliography}{9}
+
+\bibitem{time-management-students}
+MacCann, C., Fogarty, G. J., \& Roberts, R. D. (2012). Strategies for success in education: Time management is more important for part-time than full-time community college students. \textit{Learning and Individual Differences}, 22(5), 618-623.
+
+\bibitem{eisenhower}
+Covey, S. R. (1989). \textit{The 7 Habits of Highly Effective People}. Free Press.
+
+\bibitem{pomodoro}
+Cirillo, F. (2006). \textit{The Pomodoro Technique}. FC Garage.
+
+\bibitem{nextjs-docs}
+Vercel. (2024). Next.js Documentation - Project Structure. \url{https://nextjs.org/docs/app/getting-started/project-structure}
+
+\bibitem{shadcn-ui}
+shadcn. (2024). shadcn/ui - Re-usable components built with Radix UI and Tailwind CSS. \url{https://ui.shadcn.com}
+
+\end{thebibliography}
 
 \end{document}
