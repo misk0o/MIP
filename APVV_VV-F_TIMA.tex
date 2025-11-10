@@ -1,0 +1,133 @@
+
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[slovak]{babel}
+\usepackage{geometry}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\geometry{margin=2.2cm}
+\setlist[itemize]{leftmargin=1.2em, topsep=3pt, itemsep=1pt}
+\setlist[enumerate]{leftmargin=1.5em, topsep=3pt, itemsep=1pt}
+
+\definecolor{apvvgray}{RGB}{240,240,240}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\Field}[2]{\rowcolor{apvvgray}\textbf{#1} & #2\\}
+
+
+\begin{document}
+\begin{center}
+{\Large \textbf{VV–F – Vecný zámer projektu}}\\[2pt]
+\textit{Záväzná osnova pre aplikovaný výskum a vývoj}
+\end{center}
+
+\noindent\textbf{Názov projektu:} TimeManager: Inteligentný plánovač času pre študentov s integráciou Google služieb (TIMA)\\
+\textbf{Zodpovedný riešiteľ:} Michal Pípa \quad
+\textbf{Žiadateľ:} Slovenská technická univerzita v Bratislave, FIIT STU \quad
+\textbf{Štatutárny zástupca:} \emph{doplní žiadateľ}
+
+\section{Excelentnosť}
+\subsection{Projektový zámer, spôsob riešenia a aplikačná úroveň}
+TIMA je webová aplikácia pre študentov s AI asistenciou. Využíva Next.js 14 (App Router, RSC) a Django REST API s PostgreSQL (JSONB, full-text).
+Kľúčom je AI prioritizácia (Gemini) a obojsmerná synchronizácia s Google Calendar/Tasks.
+Aplikačná úroveň: softvérová služba s pilotnou prevádzkou na univerzite, pripravená na širší rollout.
+
+\subsection{Aktuálnosť a originalita}
+\begin{itemize}
+\item Reaguje na fragmentáciu nástrojov (kalendár, úlohy, poznámky) v študentskom prostredí.
+\item Kombinuje Eisenhowerovu maticu, Pomodoro a AI do jedného nástroja.
+\item Kontextové odporúčania na základe záťaže a deadline.
+\end{itemize}
+
+\subsection{Stav poznania a predchádzajúce výsledky}
+\begin{itemize}
+\item Analýza metód time managementu (Eisenhower, Pomodoro).
+\item Benchmarky existujúcich riešení (Todoist, Notion, Google Calendar).
+\end{itemize}
+
+\subsection{Ciele a reálnosť ich dosiahnutia}
+\begin{enumerate}
+\item Navrhnúť a implementovať škálovateľné jadro (API, databáza) do 12 mesiacov.
+\item Integrovať AI modul pre prioritizáciu a odhady času do 18 mesiacov.
+\item Dodať UX s dashboardom, Pomodoro a tímovou spoluprácou do 24 mesiacov.
+\item Pilotná prevádzka na FIIT STU a vyhodnotenie dopadu do 36 mesiacov.
+\end{enumerate}
+
+\subsection{Metodológia riešenia}
+\begin{itemize}
+\item Iteratívny vývoj (agile), CI/CD, jednotkové a integračné testy.
+\item Zber metrik produktivity a SUS dotazník pri pilote.
+\item Bezpečnostný dizajn (OAuth2, JWT, šifrovanie, GDPR).
+\end{itemize}
+
+\subsection{Najdôležitejšie výstupy riešiteľa (posledných 5 rokov)} 
+\begin{itemize}
+\item Prototyp TIMA – otvorené moduly (UI komponenty, synchronizačný modul).
+\item Odborný článok o architektúre a integráciách (študentské fórum).
+\item Interné technické správy (databázová schéma, API špecifikácie).
+\end{itemize}
+
+\subsection{Najdôležitejšie projekty riešiteľa (posledných 5 rokov)}
+Študentské projekty zamerané na plánovanie, integrácie API, UI/UX (FIIT STU).
+
+\subsection{Kvalita a vízia}
+\begin{itemize}
+\item Budovanie tímu (backend, frontend, integrácie, UX).
+\item Udržateľnosť – freemium model pre školy, otvorené moduly.
+\end{itemize}
+
+\subsection{Kompetentnosť organizácií a tímu a zapojenie mladých výskumníkov}
+FIIT STU disponuje zázemím pre softvérový výskum; tím pokrýva backend, frontend, integrácie a UX.
+Projekt je vedený mladým riešiteľom a zapája študentov magisterského a PhD. štúdia.
+
+\section{Dopad}
+\begin{itemize}
+\item Nová služba pre študentov so zlepšenou produktivitou a wellbeingom.
+\item Overené postupy – AI prioritizácia, obojsmerná synchronizácia, vizuálne plánovanie.
+\item Využiteľnosť na univerzitách v SR a v zahraničí (multijazyčnosť).
+\item Ekonomické prínosy: zníženie času na koordináciu, lepšia úspešnosť štúdia.
+\item Popularizácia: web, workshopy, akademické podujatia, open-source moduly.
+\end{itemize}
+
+\noindent\textbf{Opatrenia na maximalizáciu dopadu:}
+\begin{enumerate}
+\item Pilot s min. 200 používateľmi, priebežné meranie metrik.
+\item Štandardizovaná integrácia s LMS (Moodle) a Microsoft Teams.
+\item Prístupnosť a inklúzia (WCAG) – širšia použiteľnosť.
+\end{enumerate}
+
+\section{Implementácia}
+\subsection{Časový harmonogram (01.01.2026 – 31.12.2028) a pracovné balíky}
+\begin{itemize}
+\item \textbf{WP1: Analýza a návrh} (01/2026 – 06/2026): Špecifikácia požiadaviek; architektúra; GDPR DPIA draft.
+\item \textbf{WP2: Backend \& API} (04/2026 – 12/2026): API v1; AI modul v1; Sync v1.
+\item \textbf{WP3: Frontend \& UX} (07/2026 – 06/2027): UI prototyp; Beta UI; UX testy v1.
+\item \textbf{WP4: Pilot a evaluácia} (07/2027 – 12/2028): Pilot v1; Report metrik v1; Záverečná evaluácia.
+\item \textbf{WP5: Disseminácia a udržateľnosť} (01/2026 – 12/2028): Web \& dokumentácia; workshopy; plán udržateľnosti.
+\end{itemize}
+
+\subsection{Projektový manažment}
+SCRUM (2–3 týždňové sprinty), mesačné revízie, rizikový register.
+
+\subsection{Riziká a mitigácia}
+\begin{itemize}
+\item Rate limiting Google API $\rightarrow$ batchovanie, caching, exponenciálne backoff.
+\item GDPR a bezpečnosť $\rightarrow$ DPIA, šifrovanie, minimizácia dát.
+\item Náklady na AI $\rightarrow$ prompt optimalizácia, cache, plán B s lokálnymi modelmi.
+\end{itemize}
+
+\subsection{Rozpočet a zdroje}
+Rozpočet je uvedený v časti VV–C: mzdové a osobné náklady; služby (cloud, AI, bezpečnostný audit, UX výskum); materiál; cestovné; popularizácia; energie/komunikácie; nepriame náklady.
+
+\subsection{Technická a personálna infraštruktúra}
+Vývojové servery, repozitáre, CI/CD; skúsenosti s Next.js, Django, PostgreSQL, Google API.
+
+\vfill
+\noindent\textit{Pozn.: Obsah je zosúladený s \textbf{VV–F} štruktúrou a údajmi uvedenými v \textbf{VV–A až VV–E}.}
+\end{document}

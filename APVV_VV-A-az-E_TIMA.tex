@@ -1,0 +1,164 @@
+
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[slovak]{babel}
+\usepackage{geometry}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\geometry{margin=2.2cm}
+\sloppy
+\setlength{\emergencystretch}{3em}
+\renewcommand\tabularxcolumn[1]{p{#1}}
+\setlist[itemize]{leftmargin=1.2em, topsep=3pt, itemsep=1pt}
+\setlist[enumerate]{leftmargin=1.5em, topsep=3pt, itemsep=1pt}
+
+\definecolor{apvvgray}{RGB}{240,240,240}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\Field}[2]{\rowcolor{apvvgray}\textbf{#1} & #2\\}
+
+
+\begin{document}
+\begin{center}
+{\Large \textbf{Žiadosť pre aplikovaný výskum a vývoj}}\\[2pt]
+{\large \textbf{Formulár VV–A až VV–E (Príloha 5)}}\\[4pt]
+\textit{Projekt: TIMA – TimeManager: Inteligentný plánovač času pre študentov s integráciou Google služieb}
+\end{center}
+
+% ===================== A1 =====================
+\section*{VV–A1: Základné informácie o projekte}
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+\Field{Evidenčné číslo projektu}{APVV-24-XXXX (pridelí agentúra)}
+\Field{Dátum podania}{doplní žiadateľ}
+\Field{Názov projektu}{TimeManager: Inteligentný plánovač času pre študentov s integráciou Google služieb (TIMA)}
+\Field{Akronym}{TIMA}
+\Field{Odbor vedy a techniky}{9.2 Informatika a informačné technológie – Softvérové inžinierstvo, umelá inteligencia}
+\Field{Charakter výskumu}{Aplikovaný výskum (vývoj softvéru a validácia v relevantnom prostredí)}
+\Field{Začiatok riešenia}{01.01.2026}
+\Field{Koniec riešenia}{31.12.2028}
+\Field{Anotácia (max. 2\,000 znakov)}{Projekt TIMA vyvíja a overuje inteligentnú webovú aplikáciu na plánovanie času pre študentov. Riešenie kombinuje osvedčené metódy time-managementu (Eisenhowerova matica, Pomodoro technika) s integráciou Google Calendar/Tasks a AI (Gemini) pre kontextové odporúčania. Architektúra: frontend Next.js 14 (App Router, RSC, Tailwind, shadcn/ui), backend Django 5 + DRF, databáza PostgreSQL 16 (JSONB, full-text). Kľúčové prínosy: inteligentná prioritizácia a obojsmerná synchronizácia, vizuálne dashboardy, Pomodoro timer, tímová spolupráca. Projekt cieli na pilotnú prevádzku na univerzitnom prostredí a merateľné zlepšenie produktivity študentov (čas do dokončenia úlohy, adherence na plán, subjektívna spokojnosť).}
+\Field{Žiadateľská organizácia}{Slovenská technická univerzita v Bratislave, Fakulta informatiky a informačných technológií (FIIT STU)}
+\end{tabularx}
+
+\vspace{0.6em}
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+\Field{Požadované finančné prostriedky z APVV (EUR)}{239\,360}
+\Field{Spolufinancovanie projektu (EUR)}{42\,240}
+\Field{Celkové náklady na projekt (EUR)}{281\,600}
+\Field{Poznámka}{Rozpočet je orientačný a bude spresnený podľa kalkulácie ľudských zdrojov a služieb.}
+\end{tabularx}
+
+% ===================== A2 =====================
+\section*{VV–A2: Základné informácie o riešiteľských organizáciách}
+\textbf{Žiadateľ – Applicant}
+
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+\Field{Názov organizácie}{Slovenská technická univerzita v Bratislave, FIIT STU}
+\Field{Skrátený názov}{FIIT STU}
+\Field{Adresa}{Ilkovičova 2, 842 16 Bratislava, Slovenská republika}
+\Field{IČO}{00397687}
+\Field{Príslušnosť k rezortu}{Vysoké školy}
+\Field{Forma hospodárenia}{Verejná vysoká škola}
+\Field{Kontaktná osoba / E-mail}{Michal Pípa / michal.pipa@stuba.sk}
+\Field{Telefón}{+421 905 000 000}
+\end{tabularx}
+
+\smallskip
+\noindent \textbf{Spoluriešiteľská organizácia:} v tomto návrhu neplánovaná (možno doplniť neskôr).
+
+% ===================== A3 =====================
+\section*{VV–A3: Zoznam riešiteľov / List of participants}
+{\small
+\begin{tabularx}{\textwidth}{@{}p{3.6cm}p{1.7cm}Xp{2.0cm}p{2.0cm}p{1.7cm}p{1.7cm}@{}}
+\rowcolor{apvvgray}\textbf{Meno a priezvisko} & \textbf{Tituly} & \textbf{Pracovné zaradenie} & \textbf{Dátum nar.} & \textbf{IČO org.} & \textbf{Hodín} & \textbf{Hod./roky}\\ \midrule
+Michal Pípa & Bc. & Zodpovedný riešiteľ / vývoj backendu a AI &  & 00397687 & 1800 & 0.9\\
+Michal Urban &  & Frontend vývoj &  & 00397687 & 1500 & 0.75\\
+Tomáš Topalov &  & Integrácie Google API &  & 00397687 & 1000 & 0.5\\
+Tomáš Šuba &  & Výskum UX a evaluácia &  & 00397687 & 1000 & 0.5\\
+\end{tabularx}
+}
+% ===================== A4 =====================
+\section*{VV–A4: Zodpovedný riešiteľ}
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+\Field{Meno a priezvisko}{Michal Pípa}
+\Field{Pohlavie}{—}
+\Field{Telefón}{+421 905 000 000}
+\Field{E-mail}{michal.pipa@stuba.sk}
+\Field{Zodpovedný riešiteľ je mladým vedeckým pracovníkom}{Áno}
+\Field{Vedecké databázy / ORCID / WoS / Scopus}{doplní žiadateľ}
+\end{tabularx}
+
+% ===================== B =====================
+\section*{VV–B: Ciele, zámery a výstupy projektu}
+\textbf{Kľúčové slová:} time management, Eisenhowerova matica, Pomodoro, Google Calendar, Google Tasks, Gemini, Next.js, Django, PostgreSQL, študenti.
+
+\textbf{Ciele projektu:}
+\begin{enumerate}
+\item Implementovať backend (Django + DRF) a dátový model do 12 mesiacov.
+\item Vyvinúť AI modul (Gemini) pre prioritizáciu, odhad času a plánovanie.
+\item Dodať frontend (Next.js 14, Tailwind, shadcn/ui) s dashboardom a Pomodoro.
+\item Integrovať Google Calendar/Tasks s obojsmernou synchronizáciou.
+\item Realizovať pilot a evaluáciu (min. 200 používateľov) s reportom dopadu.
+\end{enumerate}
+
+\noindent\textbf{TRL projektu:} TRL 5–6.\\
+\textbf{Zdôvodnenie TRL:} Funkčný prototyp integrovaný s reálnymi službami (Google API) bude overený v relevantnom prostredí na univerzite. Napĺňa sa validácia subsystémov a prototypu (TRL5) a následne demonštrácia v relevantnom prevádzkovom prostredí s pilotnými používateľmi (TRL6).
+
+\noindent\textbf{Verejné výstupy podľa etáp:}
+\begin{itemize}
+\item WP1 (01/2026 – 06/2026): M1.1 Špecifikácia požiadaviek; M1.2 Architektonický návrh; M1.3 GDPR DPIA draft.
+\item WP2 (04/2026 – 12/2026): M2.1 API v1; M2.2 AI modul v1; M2.3 Sync v1.
+\item WP3 (07/2026 – 06/2027): M3.1 UI prototyp; M3.2 Beta UI; M3.3 UX testy v1.
+\item WP4 (07/2027 – 12/2028): M4.1 Pilot v1; M4.2 Report metrik v1; M4.3 Záverečná evaluácia.
+\item WP5 (01/2026 – 12/2028): M5.1 Web \& dokumentácia; M5.2 Workshop(y); M5.3 Plán udržateľnosti.
+\end{itemize}
+
+% ===================== C =====================
+\section*{VV–C: Rozpočet projektu (EUR)}
+{\small
+\begin{tabularx}{\textwidth}{@{}X>{\raggedleft\arraybackslash}p{2.2cm}>{\raggedleft\arraybackslash}p{2.2cm}>{\raggedleft\arraybackslash}p{2.2cm}>{\raggedleft\arraybackslash}p{2.6cm}@{}}
+\rowcolor{apvvgray}\textbf{Položka} & \textbf{2026} & \textbf{2027} & \textbf{2028} & \textbf{Spolu}\\ \toprule
+Priame prevádzkové náklady & 6~000 & 6~000 & 6~000 & 18~000\\
+Mzdové a osobné náklady & 24~000 & 36~000 & 36~000 & 96~000\\
+Sociálne a zdravotné odvody & 8~400 & 12~600 & 12~600 & 33~600\\
+Cestovné náklady & 3~000 & 3~000 & 3~000 & 9~000\\
+Materiál & 5~000 & 3~000 & 3~000 & 11~000\\
+Služby (cloud, AI, bezpečnostný audit, UX) & 16~000 & 20~000 & 22~000 & 58~000\\
+Energia, voda, komunikácie & 2~000 & 2~000 & 2~000 & 6~000\\
+Popularizačné náklady & 2~000 & 3~000 & 3~000 & 8~000\\
+Nepriame náklady & 12~000 & 15~000 & 15~000 & 42~000\\ \midrule
+\textbf{Spolu podľa rokov} & \textbf{78~400} & \textbf{100~600} & \textbf{102~600} & \textbf{281~600}\\
+Z toho: APVV / Spolufinancovanie & APVV: 239~360 & Cofin: 42~240 & — & —\\ \bottomrule
+\end{tabularx}
+}
+% ===================== D =====================
+\section*{VV–D: Harmonogram projektu a zoznam prístrojov}
+{\small\begin{longtable}{@{}p{2.2cm}p{2.2cm}p{11.6cm}@{}}
+\rowcolor{apvvgray}\textbf{Začiatok} & \textbf{Koniec} & \textbf{Názov etapy / míľniky}\\ \toprule
+01/2026 & 06/2026 & WP1 – Analýza a návrh; M1.1 Špecifikácia, M1.2 Architektúra, M1.3 DPIA draft\\
+04/2026 & 12/2026 & WP2 – Backend \& API; M2.1 API v1, M2.2 AI v1, M2.3 Sync v1\\
+07/2026 & 06/2027 & WP3 – Frontend \& UX; M3.1 UI prototyp, M3.2 Beta UI, M3.3 UX testy v1\\
+07/2027 & 12/2028 & WP4 – Pilot a evaluácia; M4.1 Pilot v1, M4.2 Report, M4.3 Záverečná evaluácia\\
+01/2026 & 12/2028 & WP5 – Disseminácia a udržateľnosť; M5.1 Web, M5.2 Workshopy, M5.3 Udržateľnosť\\
+\end{longtable}}
+
+\noindent\textbf{Zoznam prístrojov v projekte}
+
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+\Field{Vývojový server / cloud kredit}{CI/CD, staging, databázové prostredie, monitoring}
+\Field{Testovacie mobilné zariadenia}{Android/iOS zariadenia pre overenie UX a notifikácií}
+\end{tabularx}
+
+% ===================== E =====================
+\section*{VV–E: Čestné vyhlásenia}
+Vyplní a podpíše štatutárny zástupca žiadateľa (ponechané na doplnenie pri podaní).
+
+\vfill
+\noindent\textit{Pozn.: Obsah vychádza z článku o projekte TIMA a z oficiálneho členenia formulára VV–A až VV–E.}
+\end{document}
