@@ -5,7 +5,7 @@ BIBTEX = bibtex
 # Main article file
 ARTICLE = clanok
 # Project description file
-ZAMERANIE = zameranie_tima
+ZAMERANIE = zameranie
 # Presentation file
 PREZENTACIA = prezentacia
 
@@ -15,7 +15,17 @@ BIB = refs_tima.bib
 # Output directory
 OUT_DIR = build
 
-.PHONY: all article zameranie prezentacia clean cleanall view view-zameranie view-prezentacia help
+# PDF viewer (macOS: open, Linux: xdg-open, Windows: start)
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+    PDFVIEWER = open
+else ifeq ($(UNAME_S),Linux)
+    PDFVIEWER = xdg-open
+else
+    PDFVIEWER = start
+endif
+
+.PHONY: all article zameranie prezentacia clean cleanall view-article view-zameranie view-prezentacia help
 
 # Default target - compile all documents
 all: article zameranie prezentacia
@@ -25,15 +35,16 @@ article: $(ARTICLE).pdf
 
 $(ARTICLE).pdf: $(ARTICLE).tex $(BIB) | $(OUT_DIR)
 	@echo "==> Compiling $(ARTICLE).tex (first pass)..."
-	$(LATEX) -output-directory=$(OUT_DIR) $(ARTICLE).tex
-	@echo "==> Running BibTeX..."
+	@$(LATEX) -interaction=nonstopmode -output-directory=$(OUT_DIR) $(ARTICLE).tex || true
+	@echo "==> Copying bibliography file..."
 	@cp $(BIB) $(OUT_DIR)/
-	$(BIBTEX) $(OUT_DIR)/$(ARTICLE)
+	@echo "==> Running BibTeX..."
+	@cd $(OUT_DIR) && $(BIBTEX) $(ARTICLE) || true
 	@echo "==> Compiling $(ARTICLE).tex (second pass)..."
-	$(LATEX) -output-directory=$(OUT_DIR) $(ARTICLE).tex
+	@$(LATEX) -interaction=nonstopmode -output-directory=$(OUT_DIR) $(ARTICLE).tex || true
 	@echo "==> Compiling $(ARTICLE).tex (third pass)..."
-	$(LATEX) -output-directory=$(OUT_DIR) $(ARTICLE).tex
-	@cp $(OUT_DIR)/$(ARTICLE).pdf .
+	@$(LATEX) -interaction=nonstopmode -output-directory=$(OUT_DIR) $(ARTICLE).tex
+	@cp $(OUT_DIR)/$(ARTICLE).pdf . 2>/dev/null || echo "Warning: Could not copy PDF"
 	@echo "==> Done! Output: $(ARTICLE).pdf"
 
 # Compile project description
@@ -41,8 +52,8 @@ zameranie: $(ZAMERANIE).pdf
 
 $(ZAMERANIE).pdf: $(ZAMERANIE).tex | $(OUT_DIR)
 	@echo "==> Compiling $(ZAMERANIE).tex..."
-	$(LATEX) -output-directory=$(OUT_DIR) $(ZAMERANIE).tex
-	@cp $(OUT_DIR)/$(ZAMERANIE).pdf .
+	@$(LATEX) -interaction=nonstopmode -output-directory=$(OUT_DIR) $(ZAMERANIE).tex
+	@cp $(OUT_DIR)/$(ZAMERANIE).pdf . 2>/dev/null || echo "Warning: Could not copy PDF"
 	@echo "==> Done! Output: $(ZAMERANIE).pdf"
 
 # Compile presentation
@@ -50,11 +61,10 @@ prezentacia: $(PREZENTACIA).pdf
 
 $(PREZENTACIA).pdf: $(PREZENTACIA).tex | $(OUT_DIR)
 	@echo "==> Compiling $(PREZENTACIA).tex (first pass)..."
-	$(LATEX) -output-directory=$(OUT_DIR) $(PREZENTACIA).tex
+	$(LATEX) -interaction=nonstopmode -output-directory=$(OUT_DIR) $(PREZENTACIA).tex || true
 	@echo "==> Compiling $(PREZENTACIA).tex (second pass)..."
-	$(LATEX) -output-directory=$(OUT_DIR) $(PREZENTACIA).tex
-	@cp $(OUT_DIR)/$(PREZENTACIA).pdf .
-	@echo "==> Done! Output: $(PREZENTACIA).pdf"
+	$(LATEX) -interaction=nonstopmode -output-directory=$(OUT_DIR) $(PREZENTACIA).tex
+	@echo "==> Done! Output: $(OUT_DIR)/$(PREZENTACIA).pdf"
 
 # Create build directory if it doesn't exist
 $(OUT_DIR):
@@ -76,17 +86,17 @@ cleanall: clean
 	@rm -f $(ARTICLE).pdf $(ZAMERANIE).pdf $(PREZENTACIA).pdf
 	@echo "==> All clean!"
 
-# Open the article PDF (macOS)
-view: $(ARTICLE).pdf
-	@open $(ARTICLE).pdf
+# Open the article PDF
+view-article: $(ARTICLE).pdf
+	@$(PDFVIEWER) $(OUT_DIR)/$(ARTICLE).pdf
 
-# Open the project description PDF (macOS)
+# Open the project description PDF
 view-zameranie: $(ZAMERANIE).pdf
-	@open $(ZAMERANIE).pdf
+	@$(PDFVIEWER) $(OUT_DIR)/$(ZAMERANIE).pdf
 
-# Open the presentation PDF (macOS)
+# Open the presentation PDF
 view-prezentacia: $(PREZENTACIA).pdf
-	@open $(PREZENTACIA).pdf
+	@$(PDFVIEWER) $(OUT_DIR)/$(PREZENTACIA).pdf
 
 # Help target
 help:
@@ -97,7 +107,7 @@ help:
 	@echo "  make prezentacia      - Compile presentation (prezentacia.tex)"
 	@echo "  make clean            - Remove auxiliary files"
 	@echo "  make cleanall         - Remove all generated files including PDFs"
-	@echo "  make view             - Open the article PDF (macOS)"
+	@echo "  make view-article     - Open the article PDF (macOS)"
 	@echo "  make view-zameranie   - Open the project description PDF (macOS)"
 	@echo "  make view-prezentacia - Open the presentation PDF (macOS)"
 	@echo "  make help             - Show this help message"
