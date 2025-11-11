@@ -2,57 +2,613 @@
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,arrows}
 \usetheme{Madrid}
+\usecolortheme{default}
 
-\title{TIMA – jednoduchý plánovač času pre študentov}
-\author{Michal Pípa, Tomáš Topalov, Tomáš Šuba, Michal Urban}
+\title{TimeManager (TIMA)}
+\subtitle{Inteligentný plánovač času pre študentov s AI integráciou}
+\author{Michal Pípa \and Tomáš Topalov \and Tomáš Šuba \and Michal Urban}
+\institute{FIIT STU Bratislava}
 \date{Akademický rok 2025/26}
 
 \begin{document}
+
 \frame{\titlepage}
 
-\begin{frame}{Ciele projektu}
+\begin{frame}{Obsah prezentácie}
+\tableofcontents
+\end{frame}
+
+\section{Problém a motivácia}
+
+\begin{frame}{Výzvy moderného študenta}
+\begin{block}{Štatistiky}
 \begin{itemize}
-\item Jednoduché plánovanie času študentov.
-\item Pripomienky a sledovanie pokroku.
-\item Minimalizácia stresu a chaosu.
+\item 68\% študentov má problémy s time managementom
+\item Zvýšený stres a nižšia produktivita
+\item Fragmentácia nástrojov (kalendár, úlohy, poznámky)
+\end{itemize}
+\end{block}
+
+\begin{alertblock}{Kľúčové problémy}
+\begin{itemize}
+\item Nedostatok kontextuálnej inteligencie
+\item Žiadna integrácia s akademickým prostredím
+\item Manuálna prioritizácia úloh
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Existujúce riešenia}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Google Calendar}
+\begin{itemize}
+\item[+] Výborná správa udalostí
+\item[-] Chýba podpora projektov
+\end{itemize}
+
+\textbf{Todoist}
+\begin{itemize}
+\item[+] Správa úloh
+\item[-] Žiadna AI prioritizácia
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Notion}
+\begin{itemize}
+\item[+] Komplexný workspace
+\item[-] Príliš zložitý
+\end{itemize}
+
+\textbf{Microsoft To Do}
+\begin{itemize}
+\item[+] Jednoduchý
+\item[-] Bez akademickej integrácie
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\section{Návrh riešenia TIMA}
+
+\begin{frame}{Vízia projektu}
+\begin{center}
+\Large
+\textbf{Jeden nástroj pre všetko}
+\end{center}
+
+\begin{itemize}
+\item Inteligentná prioritizácia pomocou AI
+\item Automatická synchronizácia s Google službami
+\item Fokus na študentské potreby
+\item Open-source prístup
+\end{itemize}
+
+\vspace{0.5cm}
+\begin{block}{Cieľ}
+Minimalizovať stres a maximalizovať produktivitu študentov pomocou inteligentného time managementu.
+\end{block}
+\end{frame}
+
+\begin{frame}{Kľúčové metodológie}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Eisenhowerova matica}
+\begin{itemize}
+\item 4 kvadranty priority
+\item Dôležitosť vs. Naliehavosť
+\item Automatická kategorizácia
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Pomodoro technika}
+\begin{itemize}
+\item 25-minútové intervaly
+\item Sledovanie produktivity
+\item Integrovaný časovač
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\begin{center}
+\textbf{Time-blocking} - Automatické rozvrhnutie úloh do kalendára
+\end{center}
+\end{frame}
+
+\section{Architektúra systému}
+
+\begin{frame}{Technologický stack}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Frontend}
+\begin{itemize}
+\item Next.js 14 (App Router)
+\item React Server Components
+\item TypeScript
+\item Tailwind CSS
+\item shadcn/ui komponenty
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Backend}
+\begin{itemize}
+\item Django 5.0
+\item Django REST Framework
+\item PostgreSQL 16
+\item Google APIs
+\item Gemini AI API
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\begin{block}{Prečo tento stack?}
+Moderný, škálovateľný, type-safe, s aktívnou komunitou
+\end{block}
+\end{frame}
+
+\begin{frame}{Systémová architektúra}
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1.5cm,
+  box/.style={rectangle, draw, minimum width=3cm, minimum height=0.8cm, align=center}
+]
+\node[box, fill=blue!20] (frontend) {Next.js Frontend\\React + TypeScript};
+\node[box, fill=green!20, below=of frontend] (api) {Django REST API\\+ Auth + Routing};
+\node[box, fill=orange!20, below left=1cm and 0.5cm of api] (db) {PostgreSQL\\Database};
+\node[box, fill=red!20, below right=1cm and 0.5cm of api] (google) {Google APIs\\Calendar/Tasks};
+
+\draw[->, thick] (frontend) -- (api) node[midway, right] {\tiny HTTP/JSON};
+\draw[->, thick] (api) -- (db) node[midway, left] {\tiny ORM};
+\draw[->, thick] (api) -- (google) node[midway, right] {\tiny REST};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.3cm}
+\textbf{Trojvrstvová architektúra:} Frontend $\rightarrow$ API $\rightarrow$ Database
+
+\vspace{0.2cm}
+\textbf{Celkový rozpočet projektu:} 281\,600 EUR (3 roky)\\
+\small APVV financovanie: 239\,360 EUR | Spolufinancovanie: 42\,240 EUR
+\end{frame}
+
+\begin{frame}{Výhody Next.js}
+\begin{itemize}
+\item \textbf{Server-Side Rendering (SSR)}
+  \begin{itemize}
+  \item Rýchlejšie načítanie stránok
+  \item Lepšie SEO
+  \end{itemize}
+\item \textbf{React Server Components}
+  \begin{itemize}
+  \item Zníženie bundle size o $\sim$30\%
+  \item Efektívnejší data fetching
+  \end{itemize}
+\item \textbf{App Router}
+  \begin{itemize}
+  \item Moderný routing systém
+  \item Jednoduchšia organizácia kódu
+  \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Návrh systému}
+\begin{frame}{Výhody Django}
 \begin{itemize}
-\item Inbox – pridávanie úloh.
-\item Prioritizácia – Eisenhowerova matica.
-\item Time-blocking – rozvrhnutie úloh do času.
+\item \textbf{Django ORM}
+  \begin{itemize}
+  \item Eliminácia SQL injection
+  \item Type-safe databázové operácie
+  \end{itemize}
+\item \textbf{Django REST Framework}
+  \begin{itemize}
+  \item Automatická API dokumentácia (Swagger)
+  \item Vstavaná autentifikácia
+  \end{itemize}
+\item \textbf{Admin Interface}
+  \begin{itemize}
+  \item Rýchle prototypovanie
+  \item Správa dát bez extra kódu
+  \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Diagram toku}
-\centering
-\setlength{\unitlength}{0.9cm}
-\begin{picture}(12,4)
-\put(0,2){\framebox(2,1){Inbox}}
-\put(2,2.5){\vector(1,0){2}}
-\put(4,2){\framebox(3,1){Prioritizácia}}
-\put(7,2.5){\vector(1,0){2}}
-\put(9,2){\framebox(3,1){Time-blocking}}
-\end{picture}
+\section{Databázový návrh}
+
+\begin{frame}{Databázová schéma}
+\begin{center}
+$\text{Schéma} = \{ U, T, P, C, S, I \}$
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Hlavné tabuľky:}
+\begin{itemize}
+\item \textbf{U}sers - používatelia
+\item \textbf{T}asks - úlohy
+\item \textbf{P}rojects - projekty
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Podporné tabuľky:}
+\begin{itemize}
+\item \textbf{C}ategories - kategórie
+\item \textbf{S}essions - Pomodoro
+\item \textbf{I}ntegrations - prepojenia
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\begin{block}{Kľúčové vlastnosti}
+UUID identifikátory, JSONB pre AI dáta, Full-text search
+\end{block}
 \end{frame}
 
-\begin{frame}{Ukážka tabuľky}
-\begin{tabular}{|l|c|c|c|}
+\begin{frame}{Tabuľka Tasks - Detail}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Základné polia:}
+\begin{itemize}
+\item id (UUID)
+\item title, description
+\item deadline
+\item estimated\_duration
+\item status (enum)
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Špeciálne polia:}
+\begin{itemize}
+\item priority (1-4)
+\item urgency (1-4)
+\item ai\_suggestions (JSONB)
+\item google\_task\_id
+\item google\_calendar\_id
+\end{itemize}
+\end{columns}
+
+\vspace{0.3cm}
+\textbf{Eisenhowerova matica:} priority + urgency $\rightarrow$ kvadrant
+\end{frame}
+
+\begin{frame}{Optimalizácia databázy}
+\textbf{Indexy pre výkon:}
+\begin{itemize}
+\item \texttt{idx\_tasks\_user\_deadline} - vyhľadávanie podľa používateľa a deadlinu
+\item \texttt{idx\_tasks\_status} - filtrovanie podľa stavu
+\item \texttt{idx\_tasks\_fulltext (GIN)} - full-text search v slovenčine
+\end{itemize}
+
+\vspace{0.5cm}
+\begin{block}{Časová zložitosť}
+$O(\log n)$ pre indexované queries, kde $n$ = počet úloh
+\end{block}
+
+\vspace{0.3cm}
+\textbf{JSONB výhody:}
+\begin{itemize}
+\item Flexibilné ukladanie AI odporúčaní
+\item Bez potreby schema migrations
+\item Rýchle queries
+\end{itemize}
+\end{frame}
+
+\section{Integrácie a AI}
+
+\begin{frame}{Google služby integrácia}
+\begin{itemize}
+\item \textbf{Google Calendar API}
+  \begin{itemize}
+  \item Obojsmerná synchronizácia udalostí
+  \item Automatické vytvorenie time-blocks
+  \item Notifikácie a pripomienky
+  \end{itemize}
+\item \textbf{Google Tasks API}
+  \begin{itemize}
+  \item Synchronizácia úloh
+  \item Zachovanie existujúcich zoznamov
+  \end{itemize}
+\item \textbf{OAuth 2.0 autentifikácia}
+  \begin{itemize}
+  \item Bezpečné prihlásenie
+  \item Granulárne permissions
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Google Gemini AI}
+\textbf{Využitie AI pre:}
+\begin{enumerate}
+\item \textbf{Automatickú prioritizáciu}
+  \begin{itemize}
+  \item Analýza deadline, náročnosti a kontextu
+  \item Odporúčanie optimálneho času začatia
+  \end{itemize}
+\item \textbf{Rozdelenie úloh}
+  \begin{itemize}
+  \item Rozčlenenie veľkých projektov
+  \item Odhad času na podúlohy
+  \end{itemize}
+\item \textbf{Kategorizáciu}
+  \begin{itemize}
+  \item Automatické zaradenie do projektov
+  \item Návrh tagov a štítkov
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Synchronizačná stratégia}
+\textbf{Konfliktové riešenie:}
+\begin{itemize}
+\item Last-Write-Wins (LWW) s timestampmi
+\item Detekcia simultánnych zmien
+\item Používateľské notifikácie pri konfliktoch
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Optimalizácia API volaní:}
+\begin{itemize}
+\item Request batching (združovanie požiadaviek)
+\item Cache layer pre časté queries
+\item Rate limiting handling (1000 req/100s pre Calendar)
+\end{itemize}
+\end{frame}
+
+\section{Funkcionality}
+
+\begin{frame}{Dashboard a vizualizácia}
+\textbf{Denný/týždenný prehľad:}
+\begin{itemize}
+\item Farebné kódovanie podľa Eisenhowerovej matice
+\item Drag \& drop pre presuny úloh
+\item Kalendárové zobrazenie s time-blocks
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Štatistiky a grafy:}
+\begin{itemize}
+\item Sledovanie dokončených úloh
+\item Produktivita v čase
+\item Pomodoro session história
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pomodoro timer}
+\begin{columns}
+\column{0.6\textwidth}
+\textbf{Funkcie:}
+\begin{itemize}
+\item 25-minútové work sessions
+\item 5-minútové krátke prestávky
+\item 15-minútové dlhé prestávky
+\item Browser notifikácie
+\end{itemize}
+
+\column{0.4\textwidth}
+\textbf{Sledovanie:}
+\begin{itemize}
+\item Počet sessions
+\item Priradenie k úlohám
+\item História
+\item Grafy produktivity
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\begin{block}{Benefit}
+Dokazateľné zvýšenie koncentrácie a produktivity
+\end{block}
+\end{frame}
+
+\begin{frame}{Kolaborácia}
+\textbf{Tímová práca:}
+\begin{itemize}
+\item Zdieľanie projektov medzi študentmi
+\item Priradenie úloh členom tímu
+\item Real-time aktualizácie
+\item Komentáre a diskusie
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Permissions systém:}
+\begin{itemize}
+\item Owner - plná kontrola
+\item Editor - úprava úloh
+\item Viewer - len čítanie
+\end{itemize}
+\end{frame}
+
+\section{Implementačné výzvy}
+
+\begin{frame}{Technické výzvy}
+\begin{enumerate}
+\item \textbf{Synchronizácia}
+  \begin{itemize}
+  \item Real-time updates medzi TIMA a Google
+  \item Conflict resolution
+  \end{itemize}
+\item \textbf{Rate limiting}
+  \begin{itemize}
+  \item Google API limity
+  \item Implementácia batching a caching
+  \end{itemize}
+\item \textbf{AI náklady}
+  \begin{itemize}
+  \item Gemini API nie je zadarmo
+  \item Optimalizácia promptov
+  \item Response caching
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{GDPR a bezpečnosť}
+\textbf{Privacy compliance:}
+\begin{itemize}
+\item Šifrovanie osobných dát (AES-256)
+\item Explicitný súhlas používateľov
+\item Právo na vymazanie dát
+\item Export dát vo formáte JSON
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Bezpečnosť:}
+\begin{itemize}
+\item HTTPS everywhere
+\item JWT tokeny pre API
+\item OAuth 2.0 pre Google
+\item Django security middleware
+\end{itemize}
+\end{frame}
+
+\section{Porovnanie}
+
+\begin{frame}{TIMA vs. konkurencia}
+\begin{table}
+\tiny
+\begin{tabular}{|l|c|c|c|c|}
 \hline
-Úloha & Odhad [h] & Priorita & Skóre \\
+\textbf{Feature} & \textbf{TIMA} & \textbf{Todoist} & \textbf{Notion} & \textbf{Calendar} \\
 \hline
-Matematika & 2 & 3 & 6 \\
-Projekt MIP & 1 & 4 & 4 \\
-Angličtina & 1.5 & 2 & 3 \\
+AI prioritizácia & \checkmark & $\times$ & $\times$ & $\times$ \\
+Google integrácia & \checkmark & \checkmark & Čiastočne & Native \\
+Eisenhower matica & \checkmark & $\times$ & Manuálne & $\times$ \\
+Pomodoro timer & \checkmark & $\times$ & Plugin & $\times$ \\
+Študentský fokus & \checkmark & $\times$ & $\times$ & $\times$ \\
+Kolaborácia & \checkmark & Premium & \checkmark & Čiastočne \\
+Open-source & \checkmark & $\times$ & $\times$ & $\times$ \\
 \hline
 \end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\begin{block}{Jedinečnosť}
+Jediná aplikácia kombinujúca AI, time management metodológie a študentské potreby v jednom open-source balíku
+\end{block}
+\end{frame}
+
+\section{Budúci rozvoj}
+
+\begin{frame}{Roadmap}
+\textbf{Fáza 1 (Q1 2026):}
+\begin{itemize}
+\item Základná funkcionalita (inbox, prioritizácia)
+\item Google Calendar integrácia
+\item Web aplikácia
+\end{itemize}
+
+\textbf{Fáza 2 (Q2 2026):}
+\begin{itemize}
+\item Google Gemini AI integrácia
+\item Pomodoro timer
+\item Kolaboratívne featury
+\end{itemize}
+
+\textbf{Fáza 3 (Q3 2026):}
+\begin{itemize}
+\item Mobilná aplikácia (React Native)
+\item Offline mode
+\item Pokročilá analytika
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Projekt:} 01/2026 -- 12/2028 | \textbf{Celkový rozpočet:} 281\,600 EUR
+\end{frame}
+
+\begin{frame}{Ďalšie rozšírenia}
+\begin{itemize}
+\item \textbf{LMS integrácia}
+  \begin{itemize}
+  \item Moodle, Microsoft Teams
+  \item Automatický import deadlinov
+  \end{itemize}
+\item \textbf{Machine Learning predikcie}
+  \begin{itemize}
+  \item Predpovedanie času na úlohy
+  \item Personalizované odporúčania
+  \end{itemize}
+\item \textbf{Gamifikácia}
+  \begin{itemize}
+  \item Achievementy a badges
+  \item Streaky a leaderboardy
+  \end{itemize}
+\item \textbf{Voice commands}
+  \begin{itemize}
+  \item Google Assistant integrácia
+  \item Hlasové pridávanie úloh
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Záver}
+
+\begin{frame}{Prínosy projektu}
+\textbf{Pre študentov:}
+\begin{itemize}
+\item Zníženie stresu pri plánovaní
+\item Zvýšenie produktivity
+\item Jeden nástroj pre všetko
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Pre komunitu:}
+\begin{itemize}
+\item Open-source projekt
+\item Moderný tech stack showcase
+\item Vzdelávací potenciál
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Technologicky:}
+\begin{itemize}
+\item Praktická aplikácia AI
+\item Škálovateľná architektúra
+\item Best practices implementácia
+\end{itemize}
+
+\vspace{0.2cm}
+\small \textbf{Financovanie:} APVV aplikovaný výskum (TRL 5--6)
+\end{frame}
+
+\begin{frame}{Otvorené otázky}
+\begin{enumerate}
+\item \textbf{Udržateľnosť AI nákladov}
+  \begin{itemize}
+  \item Ako dlhodobo financovať Gemini API?
+  \item Možnosť self-hosted AI modelov?
+  \end{itemize}
+\item \textbf{Škálovanie}
+  \begin{itemize}
+  \item Ako zvládnuť tisíce používateľov?
+  \item Potreba load balancing a CDN?
+  \end{itemize}
+\item \textbf{Monetizácia}
+  \begin{itemize}
+  \item Freemium model?
+  \item Inštitucionálne licencie?
+  \end{itemize}
+\end{enumerate}
 \end{frame}
 
 \begin{frame}{Záver}
-TIMA je jednoduchý a efektívny systém, ktorý pomáha študentom zvládnuť úlohy prehľadne a bez stresu.
+\begin{center}
+\LARGE
+\textbf{TimeManager (TIMA)}
+\end{center}
+
+\vspace{0.5cm}
+\begin{block}{Vízia}
+Moderný, inteligentný a študentsky-centrický nástroj pre efektívny time management, ktorý využíva silu AI a moderných technológií.
+\end{block}
+
+\vspace{0.5cm}
+\begin{center}
+\textbf{Ďakujeme za pozornosť!}
+
+\vspace{0.3cm}
+Otázky?
+\end{center}
 \end{frame}
 
 \end{document}
