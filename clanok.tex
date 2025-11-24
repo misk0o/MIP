@@ -34,7 +34,7 @@
 \maketitle
 
 \begin{abstract}
-Tento článok prezentuje návrh webovej aplikácie TimeManager (TIMA), ktorá kombinuje princípy efektívneho time managementu s modernými technológiami a integráciou Google služieb. Aplikácia je určená primárne študentom a využíva umelú inteligenciu (Google Gemini) na inteligentné plánovanie úloh. Systém je postavený na Next.js frontende s Django backend-om a PostgreSQL databázou, čo zabezpečuje škálovateľnosť a vysoký výkon.
+Tento článok prezentuje komplexný návrh a plán realizácie webovej aplikácie TimeManager (TIMA), ktorá kombinuje princípy efektívneho time managementu s modernými technológiami a integráciou Google služieb. Aplikácia je určená primárne študentom a využíva umelú inteligenciu (Google Gemini) na inteligentné plánovanie úloh. Systém je postavený na Next.js frontende s Django backend-om a PostgreSQL databázou. Projekt je navrhnutý ako trojročný aplikovaný výskum (2026--2028) s celkovým rozpočtom 281\,600~EUR, zahŕňajúci vývoj, pilotnú prevádzku a evaluáciu dopadu na produktivitu študentov.
 \end{abstract}
 
 \section{Úvod a motivácia}
@@ -42,6 +42,8 @@ Tento článok prezentuje návrh webovej aplikácie TimeManager (TIMA), ktorá k
 Moderný študent čelí náročnej úlohe balansovať medzi akademickými povinnosťami, osobným rastom a voľnočasovými aktivitami. Podľa prieskumu \cite{time-management-students} až 68\% vysokoškolských študentov uvádza problémy s efektívnym plánovaním času, čo vedie k zvýšenému stresu a nižšej produktivite.
 
 Existujúce riešenia ako Todoist, Microsoft To Do či Google Tasks ponúkajú základnú funkcionalitu správy úloh, no často im chýba inteligentná prioritizácia a integrácia s akademickým prostredím. TimeManager sa snaží preklenúť túto medzeru kombináciou osvedčených metód time managementu s modernou AI technológiou.
+
+Projekt TIMA je koncipovaný ako aplikovaný výskum na úrovni TRL 5--6, čo znamená validáciu funkčného prototypu v relevantnom prostredí s cieľom demonštrovať realizovateľnosť a merateľný dopad na cieľovú skupinu.
 
 \section{Súčasný stav riešenia}
 
@@ -53,11 +55,35 @@ V oblasti time managementu existuje niekoľko osvedčených prístupov. \textbf{
 
 Súčasný trh ponúka množstvo plánovacích aplikácií. Google Calendar poskytuje vynikajúcu správu udalostí, no chýba mu podpora pre projektové úlohy. Notion ponúka komplexný workspace, ale je príliš zložitý pre jednoduchý time management. Todoist exceluje v správe úloh, no nemá natívnu integráciu s akademickými systémami.
 
+\subsection{Výskumná medzera}
+
+Analýza existujúcich riešení odhalila tri hlavné nedostatky: (1) absencia kontextuálnej AI asistencii pri plánovaní, (2) fragmentácia nástrojov vyžadujúca prepínanie medzi viacerými platformami, (3) nedostatočná podpora akademického prostredia (LMS integrácie, sledovanie študijných deadlinov). TIMA adresuje tieto medzery integrovaným prístupom.
+
 \section{Problémová oblasť}
 
-Hlavným problémom je \textbf{fragmentácia nástrojov} – študenti musia prepínať medzi viacerými aplikáciami (kalendár, úlohy, poznámky), čo znižuje efektivitu. Druhý významný problém je \textbf{nedostatok kontextuálnej inteligencie} – existujúce nástroje nereagují na aktuálnu záťaž používateľa ani neposkytujú adaptívne odporúčania.
+Hlavným problémom je \textbf{fragmentácia nástrojov} -- študenti musia prepínať medzi viacerými aplikáciami (kalendár, úlohy, poznámky), čo znižuje efektivitu. Druhý významný problém je \textbf{nedostatok kontextuálnej inteligencie} -- existujúce nástroje nereagují na aktuálnu záťaž používateľa ani neposkytujú adaptívne odporúčania.
 
-Zároveň chybí \textbf{integrácia s akademickým prostredím} – prepojenie s rozvrhovými systémami škôl, sledovanie deadlinov semestrálnych prác či koordinácia skupinových projektov.
+Zároveň chybí \textbf{integrácia s akademickým prostredím} -- prepojenie s rozvrhovými systémami škôl, sledovanie deadlinov semestrálnych prác či koordinácia skupinových projektov.
+
+Z ekonomického hľadiska študenti strácajú priemerne 3--5 hodín týždenne neefektívnym plánovaním a koordináciou, čo pri populácii vysokoškolákov v SR predstavuje značné ekonomické straty v podobe zníženej produktivity a predĺženého štúdia.
+
+\section{Ciele projektu}
+
+Projekt TIMA si kladie za cieľ vyvinúť a overiť funkčný prototyp inteligentného plánovača s nasledujúcimi špecifickými cieľmi:
+
+\begin{enumerate}
+\item \textbf{Technický vývoj}: Implementovať škálovateľný backend (Django + DRF) s relačným dátovým modelom do 12 mesiacov od začiatku projektu.
+
+\item \textbf{AI integrácia}: Vyvinúť a integrovať AI modul (Google Gemini) pre automatickú prioritizáciu úloh, odhad času a inteligentné plánovanie do 18 mesiacov.
+
+\item \textbf{Používateľské rozhranie}: Dodať responzívny frontend (Next.js 14) s dashboardom, vizualizáciami a Pomodoro timerom do 24 mesiacov.
+
+\item \textbf{Integrácie}: Zabezpečiť obojsmernú synchronizáciu s Google Calendar a Tasks s konfliktovým riešením do 24 mesiacov.
+
+\item \textbf{Validácia}: Realizovať pilotné nasadenie s minimálne 200 používateľmi na FIIT STU a vyhodnotiť dopad na produktivitu do 36 mesiacov.
+\end{enumerate}
+
+Ciele sú merateľné prostredníctvom technických míľnikov (funkčné moduly), používateľských metrík (čas do dokončenia úlohy, adherencia na plán) a kvalitatívneho hodnotenia (SUS dotazník, focus groups).
 
 \section{Návrh riešenia}
 
@@ -80,6 +106,35 @@ TimeManager využíva modernú trojvrstvovú architektúru:
 \item \textbf{Pomodoro timer}: Vstavaný časovač s notifikáciami a sledovaním produktivity.
 \item \textbf{Kolaborácia}: Zdieľanie projektov a úloh v rámci študentských tímov.
 \end{enumerate}
+
+\section{Metodológia výskumu}
+
+Projekt využíva iteratívny prístup s agile metódikou (SCRUM). Vývoj je organizovaný do 2--3 týždňových sprintov s pravidelnými review a retrospektívami.
+
+\subsection{Vývojový proces}
+
+\textbf{Continuous Integration/Deployment (CI/CD)}: Automatizované buildovanie, testovanie a deployment zabezpečuje rýchlu iteráciu a kvalitu kódu. Každý commit spúšťa pipeline zahŕňajúci unit testy, integračné testy a bezpečnostné skenery.
+
+\textbf{Testovacia stratégia}: Kombinuje jednotkové testy (coverage $>$ 80\%), integračné testy API endpointov, end-to-end testy používateľských tokov a performance testy (load testing s expected 500 concurrent users).
+
+\textbf{Bezpečnostný dizajn}: Implementuje OAuth 2.0 pre autentifikáciu, JWT tokeny pre API, šifrovanie osobných dát (AES-256), HTTPS everywhere a pravidelné bezpečnostné audity. GDPR compliance je zabezpečená Data Protection Impact Assessment (DPIA).
+
+\subsection{Evaluačná metodológia}
+
+Pilot bude prebiehať v dvoch fázach:
+
+\textbf{Alfa testovanie} (mesiac 18--21): Uzavretá skupina 30--50 early adopters z FIIT STU, kvalitatívny feedback cez týždenné dotazníky a focus groups.
+
+\textbf{Beta testovanie} (mesiac 24--36): Otvorený pilot pre minimálne 200 študentov, kvantitatívne meranie metrík:
+\begin{itemize}
+\item Čas strávený plánovaním (vs. baseline)
+\item Adherencia na plán (počet dokončených úloh / plánovaných)
+\item Task completion rate
+\item Subjektívna spokojnosť (System Usability Scale -- SUS)
+\item Net Promoter Score (NPS)
+\end{itemize}
+
+Validácia bude porovnávať experimentálnu skupinu (používatelia TIMA) s kontrolnou skupinou (tradičné nástroje) použitím paired t-testu pre štatistickú signifikanciu.
 
 \section{Databázová schéma}
 
@@ -202,6 +257,128 @@ Hlavné technické výzvy zahŕňajú:
 \item \textbf{AI náklady}: Gemini API nie je zadarmo, optimalizácia promptov a caching odpovedí znižujú náklady.
 \item \textbf{Privacy}: GDPR compliance vyžaduje šifrovanie osobných dát a explicitný súhlas používateľov.
 \end{enumerate}
+
+\section{Projektový manažment a harmonogram}
+
+Projekt je naplánovaný na 36 mesiacov (01/2026 -- 12/2028) s piatimi hlavnými pracovnými balíkmi (Work Packages):
+
+\subsection{WP1: Analýza a návrh (M1--M6)}
+
+\textbf{Cieľ}: Špecifikovať požiadavky, navrhnúť architektúru a zabezpečiť GDPR compliance.
+
+\textbf{Aktivity}:
+\begin{itemize}
+\item Požiadavkový výskum (interviews s 50+ študentmi)
+\item Architektúrny návrh (systémová architektúra, API špecifikácia)
+\item GDPR Data Protection Impact Assessment (DPIA)
+\item Výber technologického stacku a setupy vývojového prostredia
+\end{itemize}
+
+\textbf{Výstupy}: Špecifikácia požiadaviek v1.0, Architektonický dokument v1.0, GDPR DPIA draft.
+
+\subsection{WP2: Backend a API (M4--M12)}
+
+\textbf{Cieľ}: Implementovať škálovateľné backend služby a AI modul.
+
+\textbf{Aktivity}:
+\begin{itemize}
+\item Databázový dizajn a implementácia (PostgreSQL)
+\item RESTful API v Django REST Framework
+\item AI modul pre prioritizáciu (Gemini integration)
+\item Synchronizačný modul pre Google Calendar/Tasks
+\item Unit a integračné testy (coverage $>$ 80\%)
+\end{itemize}
+
+\textbf{Výstupy}: API v1.0 (OpenAPI dokumentácia), AI modul v1.0, Sync modul v1.0.
+
+\subsection{WP3: Frontend a UX (M7--M18)}
+
+\textbf{Cieľ}: Vyvinúť responzívne používateľské rozhranie.
+
+\textbf{Aktivity}:
+\begin{itemize}
+\item UI prototyping (wireframes, mockups)
+\item Implementácia v Next.js 14 (App Router, RSC)
+\item Dashboard, Eisenhower matrix view, Pomodoro timer
+\item UX testovanie (usability testing, A/B testing)
+\item Accessibility audit (WCAG 2.1 AA)
+\end{itemize}
+
+\textbf{Výstupy}: UI prototyp v1.0, Beta UI v2.0, UX test report v1.
+
+\subsection{WP4: Pilot a evaluácia (M19--M36)}
+
+\textbf{Cieľ}: Validovať riešenie v reálnom prostredí a vyhodnotiť dopad.
+
+\textbf{Aktivity}:
+\begin{itemize}
+\item Alfa pilot (30--50 používateľov, M19--M21)
+\item Beta pilot (200+ používateľov, M24--M36)
+\item Zber metrík (produktivita, spokojnosť, usage patterns)
+\item Analýza dát (štatistické testovanie, kvalit. analýza)
+\item Záverečná evaluačná správa
+\end{itemize}
+
+\textbf{Výstupy}: Pilot deployment v1.0, Metriky report v1.0, Záverečná evaluačná správa.
+
+\subsection{WP5: Disseminácia a udržateľnosť (M1--M36)}
+
+\textbf{Cieľ}: Zabezpečiť viditeľnosť projektu a dlhodobú udržateľnosť.
+
+\textbf{Aktivity}:
+\begin{itemize}
+\item Projektový web a dokumentácia (kontinuálne)
+\item Open-source release (GitHub, licencia MIT)
+\item Workshopy pre študentov a akademickú obec (3x ročne)
+\item Publikácie (konferencie, časopisy)
+\item Plán udržateľnosti (freemium model, inštitucionálne licencie)
+\end{itemize}
+
+\textbf{Výstupy}: Projektový web, Open-source repozitár, 3+ workshop events, 2+ publikácie, Sustainability plan.
+
+\section{Riziká a mitigačné stratégie}
+
+\subsection{Technické riziká}
+
+\textbf{Rate limiting Google API}: Google API majú obmedzenia (1000 požiadaviek/100s pre Calendar). Mitigácia: request batching, inteligentný caching, exponenciálne backoff, backup na lokálne úložisko.
+
+\textbf{AI náklady}: Gemini API nie je zadarmo, náklady môžu eskalovať pri vysokom počte používateľov. Mitigácia: prompt optimalizácia, response caching (TTL 24h), rate limiting pre AI featury, plán B s open-source LLM (Llama 2).
+
+\textbf{Škálovateľnosť}: Potreba zvládnuť 500+ simultánnych používateľov. Mitigácia: load testing od M12, horizontálne škálovanie (Kubernetes), database indexing, CDN pre statický content.
+
+\subsection{Projektové riziká}
+
+\textbf{Nízka adopcia pilotu}: Riziko nedostatočného počtu účastníkov. Mitigácia: gamifikácia (achievementy), incentívy (kredity, certifikáty), aktívny marketing na fakulte.
+
+\textbf{GDPR compliance}: Porušenie môže mať právne dôsledky. Mitigácia: DPIA v M6, pravidelné audity, právne konzultácie, minimalizácia osobných dát.
+
+\textbf{Časový sklz}: Oneskorenie míľnikov. Mitigácia: buffer čas v pláne (20\% reserve), agile prístup umožňujúci re-prioritizáciu, mesačné review.
+
+\section{Rozpočet projektu}
+
+Celkový rozpočet projektu na 36 mesiacov je \textbf{281\,600 EUR}, z toho \textbf{239\,360 EUR} je požadovaných z APVV a \textbf{42\,240 EUR} predstavuje spolufinancovanie (15\%).
+
+\subsection{Rozpočtová štruktúra}
+
+\textbf{Mzdové a osobné náklady} (96\,000 EUR, 34\%): Zahŕňajú 4 členov tímu s úväzkami 0.5--0.9 FTE. Zodpovedný riešiteľ (backend + AI), frontend developer, integračný špecialista (Google API) a UX researcher.
+
+\textbf{Sociálne a zdravotné odvody} (33\,600 EUR, 12\%): Zákonné odvody 35\% z miezd.
+
+\textbf{Služby} (58\,000 EUR, 21\%): Cloud hosting (AWS/Google Cloud), Gemini API kredity, bezpečnostné audity, UX výskumné nástroje (UserTesting, Hotjar), právne poradenstvo (GDPR).
+
+\textbf{Materiál} (11\,000 EUR, 4\%): Testovacie zariadenia (mobile devices), development hardware (laptops), licencie (IDE, design tools).
+
+\textbf{Cestovné} (9\,000 EUR, 3\%): Konferencie, workshopy, networking events.
+
+\textbf{Popularizácia} (8\,000 EUR, 3\%): Marketing materiály, video produkcia, podujatia, web hosting.
+
+\textbf{Priame prevádzkové} (18\,000 EUR, 6\%): Kancelárske potreby, tlač, administratíva.
+
+\textbf{Energia a komunikácie} (6\,000 EUR, 2\%): Internet, telefón, utilities.
+
+\textbf{Nepriame náklady} (42\,000 EUR, 15\%): Overhead univerzity (režijné náklady).
+
+Rozpočet je navrhnutý konzervatívne s 20\% rezervou na nepredvídané výdavky. Finančný plán je flexibilný a umožňuje realokáciu medzi položkami podľa aktuálnych potrieb.
 
 \onecolumn
 
@@ -528,11 +705,40 @@ Plánované rozšírenia zahŕňajú:
 \item Voice commands cez Google Assistant
 \end{itemize}
 
+Po ukončení projektu je plánovaný prechod na udržateľný model prostredníctvom freemium licencovania (základné funkcie zadarmo, pokročilé AI featury za poplatok) a inštitucionálnych licencií pre univerzity.
+
+\section{Očakávaný dopad}
+
+\subsection{Vedecký dopad}
+
+Projekt prinesie nové poznatky v oblasti aplikácie AI v produktivitných nástrojoch, specifically:
+\begin{itemize}
+\item Metodológia kontextuálnej AI prioritizácie úloh
+\item Architektonické vzory pre obojsmernú synchronizáciu s externými službami
+\item Evaluačný framework pre meranie dopadu na produktivitu
+\end{itemize}
+
+Výsledky budú publikované na medzinárodných konferenciách (HCI, Software Engineering) a v odborných časopisoch.
+
+\subsection{Spoločenský dopad}
+
+\textbf{Pre študentov}: Zníženie stresu, zvýšenie produktivity, lepšia work-life balance. Očakávaný dopad: zníženie času na plánovanie o 30\%, zvýšenie adherencie na plán o 40\%.
+
+\textbf{Pre univerzity}: Nástroj podporujúci študentskú úspešnosť, integrovateľný s existujúcimi systémami. Potenciál zníženia študijného neúspechu.
+
+\textbf{Pre spoločnosť}: Prenos výskumných výsledkov do praxe, open-source prínos, vzdelávanie v oblasti produktivity.
+
+\subsection{Ekonomický dopad}
+
+Pri konzervatívnom odhade 3\,000 aktívnych používateľov v SR po 5 rokoch a úspore 3 hodín/týždeň na používateľa (hodnota 15 EUR/hodina študentského času), ekonomický prínos predstavuje cca 2.1M EUR ročne v podobe zvýšenej produktivity.
+
 \section{Záver}
 
-TimeManager predstavuje moderný prístup k time managementu pre študentov, ktorý kombinuje osvedčené metodológie s najnovšími technológiami. Integrácia Google služieb a AI asistenta Gemini poskytuje inteligentné a kontextuálne odporúčania, zatiaľ čo robustný tech stack (Next.js, Django, PostgreSQL) zabezpečuje škálovateľnosť a spoľahlivosť.
+TimeManager predstavuje komplexný aplikovaný výskum kombinujúci moderné technológie (Next.js, Django, PostgreSQL) s AI asistenciou (Google Gemini) a osvedčenými metodológiami time managementu. Trojročný projekt s rozpočtom 281\,600 EUR je navrhnutý tak, aby dosiahol TRL 6 prostredníctvom pilotnú prevádzky s minimálne 200 používateľmi a merateľnými dopadmi na produktivitu.
 
-Článok predstavil problematiku fragmentácie nástrojov, návrh riešenia s detailnou databázovou schémou, implementačnými príkladmi a porovnanie s existujúcimi alternatívami. Otvorené zostávajú otázky dlhodobej udržateľnosti AI nákladov a širšej integrácie s akademickými systémami, ktoré budú predmetom ďalšieho výskumu.
+Článok predstavil komplexnú problematiku fragmentácie nástrojov, detailný návrh riešenia zahŕňajúci architektúru, databázovú schému, implementačné príklady a projektový plán. Definované boli ciele, metodológia výskumu, harmonogram, rozpočet a mitigácie rizík. Očakávaný dopad zahŕňa vedecký prínos (nové poznatky o AI v produktivite), spoločenský prínos (lepšia student wellbeing) a ekonomický prínos (úspora času).
+
+Otvorené zostávajú otázky dlhodobej udržateľnosti AI nákladov, škálovania na tisíce používateľov a širšej integrácie s akademickými systémami, ktoré budú predmetom ďalšieho výskumu a vývoja po ukončení projektu.
 
 \bibliographystyle{plain}
 \bibliography{refs_tima}

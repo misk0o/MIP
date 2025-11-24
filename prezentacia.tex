@@ -9,9 +9,27 @@
 \usetheme{Madrid}
 \usecolortheme{default}
 
+% Fix footer overlapping
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
 \title{TimeManager (TIMA)}
 \subtitle{Inteligentný plánovač času pre študentov s AI integráciou}
-\author{Michal Pípa \and Tomáš Topalov \and Tomáš Šuba \and Michal Urban}
+\author[Pípa, Topalov, Šuba, Urban]{Michal Pípa \and Tomáš Topalov \and Tomáš Šuba \and Michal Urban}
 \institute{FIIT STU Bratislava}
 \date{Akademický rok 2025/26}
 
@@ -169,50 +187,6 @@ Moderný, škálovateľný, type-safe, s aktívnou komunitou
 
 \vspace{0.3cm}
 \textbf{Trojvrstvová architektúra:} Frontend $\rightarrow$ API $\rightarrow$ Database
-
-\vspace{0.2cm}
-\textbf{Celkový rozpočet projektu:} 281\,600 EUR (3 roky)\\
-\small APVV financovanie: 239\,360 EUR | Spolufinancovanie: 42\,240 EUR
-\end{frame}
-
-\begin{frame}{Výhody Next.js}
-\begin{itemize}
-\item \textbf{Server-Side Rendering (SSR)}
-  \begin{itemize}
-  \item Rýchlejšie načítanie stránok
-  \item Lepšie SEO
-  \end{itemize}
-\item \textbf{React Server Components}
-  \begin{itemize}
-  \item Zníženie bundle size o $\sim$30\%
-  \item Efektívnejší data fetching
-  \end{itemize}
-\item \textbf{App Router}
-  \begin{itemize}
-  \item Moderný routing systém
-  \item Jednoduchšia organizácia kódu
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Výhody Django}
-\begin{itemize}
-\item \textbf{Django ORM}
-  \begin{itemize}
-  \item Eliminácia SQL injection
-  \item Type-safe databázové operácie
-  \end{itemize}
-\item \textbf{Django REST Framework}
-  \begin{itemize}
-  \item Automatická API dokumentácia (Swagger)
-  \item Vstavaná autentifikácia
-  \end{itemize}
-\item \textbf{Admin Interface}
-  \begin{itemize}
-  \item Rýchle prototypovanie
-  \item Správa dát bez extra kódu
-  \end{itemize}
-\end{itemize}
 \end{frame}
 
 \section{Databázový návrh}
@@ -512,33 +486,8 @@ Jediná aplikácia kombinujúca AI, time management metodológie a študentské 
 \item Pokročilá analytika
 \end{itemize}
 
-\vspace{0.2cm}
-\textbf{Projekt:} 01/2026 -- 12/2028 | \textbf{Celkový rozpočet:} 281\,600 EUR
-\end{frame}
-
-\begin{frame}{Ďalšie rozšírenia}
-\begin{itemize}
-\item \textbf{LMS integrácia}
-  \begin{itemize}
-  \item Moodle, Microsoft Teams
-  \item Automatický import deadlinov
-  \end{itemize}
-\item \textbf{Machine Learning predikcie}
-  \begin{itemize}
-  \item Predpovedanie času na úlohy
-  \item Personalizované odporúčania
-  \end{itemize}
-\item \textbf{Gamifikácia}
-  \begin{itemize}
-  \item Achievementy a badges
-  \item Streaky a leaderboardy
-  \end{itemize}
-\item \textbf{Voice commands}
-  \begin{itemize}
-  \item Google Assistant integrácia
-  \item Hlasové pridávanie úloh
-  \end{itemize}
-\end{itemize}
+\vspace{0.3cm}
+\small \textbf{Trvanie projektu:} 01/2026 -- 12/2028 (36 mesiacov)
 \end{frame}
 
 \section{Záver}
@@ -566,29 +515,39 @@ Jediná aplikácia kombinujúca AI, time management metodológie a študentské 
 \item Škálovateľná architektúra
 \item Best practices implementácia
 \end{itemize}
-
-\vspace{0.2cm}
-\small \textbf{Financovanie:} APVV aplikovaný výskum (TRL 5--6)
 \end{frame}
 
-\begin{frame}{Otvorené otázky}
-\begin{enumerate}
-\item \textbf{Udržateľnosť AI nákladov}
-  \begin{itemize}
-  \item Ako dlhodobo financovať Gemini API?
-  \item Možnosť self-hosted AI modelov?
-  \end{itemize}
-\item \textbf{Škálovanie}
-  \begin{itemize}
-  \item Ako zvládnuť tisíce používateľov?
-  \item Potreba load balancing a CDN?
-  \end{itemize}
-\item \textbf{Monetizácia}
-  \begin{itemize}
-  \item Freemium model?
-  \item Inštitucionálne licencie?
-  \end{itemize}
-\end{enumerate}
+\begin{frame}{Rozpočet projektu}
+\begin{center}
+\textbf{Celkový rozpočet: 281\,600 EUR}\\
+\small (trojročný projekt 2026--2028)
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Financovanie:}
+\begin{itemize}
+\item APVV: 239\,360 EUR (85\%)
+\item Spolufinancovanie: 42\,240 EUR (15\%)
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Hlavné položky:}
+\begin{itemize}
+\item Mzdy: 96\,000 EUR
+\item Služby: 58\,000 EUR
+\item Odvody: 33\,600 EUR
+\item Ostatné: 94\,000 EUR
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+
+\begin{block}{Typ projektu}
+APVV aplikovaný výskum (TRL 5--6)
+\end{block}
 \end{frame}
 
 \begin{frame}{Záver}
